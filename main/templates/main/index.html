@@ -1,0 +1,113 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Главная | PC Cleaner Pro{% endblock %}
+
+{% block content %}
+    <!-- Hero-секция -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Профессиональная очистка вашего ПК</h1>
+            <p class="hero-subtitle">Удаление вредоносного ПО и оптимизация системы в один клик</p>
+        </div>
+        <div class="hero-stats">
+            <div class="stat-item">
+                <div class="stat-number">10,000+</div>
+                <div class="stat-label">Довольных пользователей</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">156</div>
+                <div class="stat-label">Обновлений программы</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Поддержка клиентов</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Наши преимущества -->
+    <section class="advantages">
+        <div class="container">
+            <h2 class="section-title">Почему выбирают нас</h2>
+            <div class="advantages-grid">
+                <div class="advantage-card">
+                    <i class="fas fa-bolt advantage-icon"></i>
+                    <h3>Молниеносная очистка</h3>
+                    <p>Полная проверка и очистка системы всего за 2 минуты</p>
+                </div>
+                <div class="advantage-card">
+                    <i class="fas fa-sync-alt advantage-icon"></i>
+                    <h3>Частые обновления</h3>
+                    <p>Еженедельные обновления базы вредоносных программ</p>
+                </div>
+                <div class="advantage-card">
+                    <i class="fas fa-headset advantage-icon"></i>
+                    <h3>Поддержка 24/7</h3>
+                    <p>Дружелюбная администрация всегда готова помочь</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Как это работает -->
+    <section class="how-it-works">
+        <h2 class="section-title">Как работает PC Cleaner Pro</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Сканирование</h3>
+                <p>Глубокий анализ системы на наличие вредоносных программ</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Обнаружение</h3>
+                <p>Выявление всех потенциально опасных элементов</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Очистка</h3>
+                <p>Безопасное удаление всех угроз в один клик</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Тарифы -->
+    <section class="pricing">
+        <h2 class="section-title">Доступные тарифы</h2>
+        <div class="pricing-cards">
+            <!-- Карточка 1 -->
+            <div class="pricing-card">
+                <h3>Базовый</h3>
+                <div class="price">$1</div>
+                <ul class="features-list">
+                    <li><i class="fas fa-check"></i> Полная очистка (все категории)</li>
+                    <li><i class="fas fa-check"></i> На 1 месяц</li>
+                </ul>
+                <button class="btn-buy">Купить</button>
+            </div>
+
+            <!-- Карточка 2 (Популярный) -->
+            <div class="pricing-card highlight">
+                <div class="popular-badge">Популярный</div>
+                <h3>Профессиональный</h3>
+                <div class="price">$1337</div>
+                <ul class="features-list">
+                    <li><i class="fas fa-check"></i> Полная очистка (все категории)</li>
+                    <li><i class="fas fa-check"></i> Навсегда </li>
+                </ul>
+                <button class="btn-buy">Купить</button>
+            </div>
+
+            <!-- Карточка 3 -->
+            <div class="pricing-card">
+                <h3>Расширенный</h3>
+                <div class="price">$228</div>
+                <ul class="features-list">
+                    <li><i class="fas fa-check"></i> Полная очистка (все категории)</li>
+                    <li><i class="fas fa-check"></i> На 90 дней</li>
+                </ul>
+                <button class="btn-buy">Купить</button>
+            </div>
+        </div>
+    </section>
+{% endblock %}

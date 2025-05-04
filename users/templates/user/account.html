@@ -1,0 +1,128 @@
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой аккаунт | PC Cleaner Pro</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="account-container">
+        <!-- Боковая панель -->
+        <aside class="account-sidebar">
+            <div class="profile-card">
+            <div class="avatar-wrapper">
+                {% if user.profile_picture %}
+                    <img src="{{ user.profile_picture.url }}" alt="Аватар" class="profile-avatar">
+                {% else %}
+                    <div class="default-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                {% endif %}
+            </div>
+                <h2 class="username">{{ username }}</h2>
+                <p class="email">{{ email }}</p>
+
+                <div class="subscription-status">
+                    {% if is_subscribed %}
+                        <span class="badge active"><i class="fas fa-crown"></i> Подписка активна</span>
+                    {% else %}
+                        <span class="badge inactive"><i class="fas fa-hourglass-half"></i> Нет подписки</span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <nav class="account-menu">
+                <a href="#" class="menu-item active"><i class="fas fa-user-cog"></i> Профиль</a>
+                <a href="#" class="menu-item"><i class="fas fa-history"></i> История</a>
+                <a href="{% url 'logout' %}" class="menu-item"><i class="fas fa-sign-out-alt"></i> Выйти</a>
+            </nav>
+        </aside>
+
+        <!-- Основное содержимое -->
+        <main class="account-content">
+            <div class="content-header">
+                <h1><i class="fas fa-user-cog"></i> Настройки профиля</h1>
+                <button class="edit-btn" id="editProfileBtn">Редактировать</button>
+            </div>
+
+            <form class="profile-form" id="profileForm">
+                <div class="form-section">
+                    <h2><i class="fas fa-id-card"></i> Основная информация</h2>
+
+                    <div class="form-group">
+                        <label for="username"><i class="fas fa-user"></i> Имя пользователя</label>
+                        <input type="text" id="username" value="{{ username }}" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email"><i class="fas fa-envelope"></i> Email</label>
+                        <input type="email" id="email" value="{{ email }}" readonly>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2><i class="fas fa-lock"></i> Безопасность</h2>
+
+                    <div class="form-group">
+                        <label for="currentPassword"><i class="fas fa-key"></i> Текущий пароль</label>
+                        <input type="password" id="currentPassword" placeholder="••••••••" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="newPassword"><i class="fas fa-key"></i> Новый пароль</label>
+                        <input type="password" id="newPassword" placeholder="••••••••" readonly>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="cancel-btn" id="cancelEditBtn" style="display: none;">Отмена</button>
+                    <button type="submit" class="save-btn" id="saveChangesBtn" style="display: none;">Сохранить изменения</button>
+                </div>
+            </form>
+
+            <!-- Секция подписки -->
+            <div class="subscription-section">
+                <h2><i class="fas fa-crown"></i> Статус подписки</h2>
+                <div class="subscription-card {% if is_subscribed %}active{% else %}inactive{% endif %}">
+                    {% if is_subscribed %}
+                        <h3>Ваша подписка активна</h3>
+                        <p>Доступно скачивание лаунчера</p>
+                        <a href="/download-launcher" class="manage-subscription-btn">Скачать лаунчер</a>
+                    {% else %}
+                        <h3>Подписка не активна</h3>
+                        <p>Для доступа к лаунчеру оформите подписку</p>
+                        <a href="/pricing" class="subscribe-btn">Оформить подписку</a>
+                    {% endif %}
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Модальное окно для смены аватара -->
+    <div class="modal" id="avatarModal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h2>Сменить аватар</h2>
+                <form id="avatarForm" method="post" enctype="multipart/form-data" action="{% url 'account' %}">
+                    {% csrf_token %}
+                    <div class="avatar-preview" id="avatarPreview">
+                        {% if user.profile_picture %}
+                            <img src="{{ user.profile_picture.url }}" alt="Текущий аватар">
+                        {% else %}
+                            <div class="default-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                        {% endif %}
+                    </div>
+                    {{ avatar_form.profile_picture }}
+                    <button type="submit" class="upload-btn">Сохранить</button>
+                </form>
+            </div>
+        </div>
+
+
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

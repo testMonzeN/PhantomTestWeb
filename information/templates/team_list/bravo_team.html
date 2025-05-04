@@ -1,0 +1,43 @@
+{% extends 'team_list/base.html' %}
+
+{% block title %}Phantom Team - Состав{% endblock %}
+
+{% block content %}
+<div class="team-container">
+    <div class="team-header">
+        <h1>Phantom Team</h1>
+        <p>Наша команда профессионалов, работающих над PC Cleaner Pro</p>
+    </div>
+    
+    <div class="team-members">
+        {% for member in members %}
+        <div class="member-card" style="animation-delay: {{ forloop.counter0|add:1 }}00ms">
+            <div class="member-avatar">
+                <div class="avatar-placeholder">{{ member.name|first }}{{ member.surnames|first|default:"" }}</div>
+            </div>
+            <div class="member-info">
+                <h3>{{ member.name }}</h3>
+                {% if member.surnames %}
+                <p class="member-aliases">AKA: {{ member.surnames }}</p>
+                {% endif %}
+                <div class="member-role" style="--role-color: {{ member.role.color }};">
+                    {{ member.role.name }}
+                </div>
+                <p class="member-about">{{ member.about }}</p>
+                
+                <div class="member-links">
+                    {% for link in member.social_links.all %}
+                    <a href="{{ link.url }}" target="_blank" class="social-link" data-platform="{{ link.platform }}">
+                        <i class="fab {{ link.icon }}"></i>
+                    </a>
+                    {% endfor %}
+                </div>
+
+                <a href="{% url 'member_info' member.pk %}" class="btn-more">Подробнее</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,16 @@
+{% load static %}
+
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Требуется подписка</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="subscription-required">
+        <h1><i class="fas fa-crown"></i> Требуется подписка</h1>
+        <p>Для скачивания лаунчера необходимо оформить подписку.</p>
+        <a href="{% url 'main' %}" class="btn-subscribe">Оформить подписку</a>
+    </div>
+</body>
+</html>

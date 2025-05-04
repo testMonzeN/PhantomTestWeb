@@ -1,0 +1,926 @@
+/* Базовые стили */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #111827;
+  color: white;
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+}
+
+/* Шапка */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  background-color: rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 100;
+}
+
+.header-nav {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.nav-btn {
+  padding: 8px 15px;
+  background: transparent;
+  color: white;
+  border: 1px solid #3f3f46;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-btn:hover {
+  background: rgba(168, 85, 247, 0.1);
+  border-color: #a855f7;
+}
+
+.auth-btn {
+  background: #a855f7 !important;
+  border: none !important;
+}
+
+/* Выпадающие меню */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background: #1f1f1f;
+  border: 1px solid #3f3f46;
+  border-radius: 8px;
+  min-width: 160px;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  transition: background 0.3s;
+}
+
+.dropdown-content a:hover {
+  background: #a855f7;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-content i {
+  margin-right: 8px;
+  width: 16px;
+  text-align: center;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  background: linear-gradient(to right, #a855f7, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.btn-header {
+  padding: 10px 20px;
+  background: #a855f7;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Hero-секция */
+.hero {
+  text-align: center;
+  padding: 80px 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Hero-статистика */
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 60px;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  text-align: center;
+  background: rgba(168, 85, 247, 0.1);
+  padding: 20px 30px;
+  border-radius: 12px;
+  border: 1px solid #a855f7;
+}
+
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: bold;
+  background: linear-gradient(to right, #a855f7, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 5px;
+}
+
+.stat-label {
+  color: #d1d5db;
+  font-size: 1rem;
+}
+
+/* Преимущества */
+.advantages {
+  padding: 80px 0;
+  background: rgba(39, 39, 42, 0.3);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.advantages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 40px auto 0;
+}
+
+.advantage-card {
+  background: rgba(39, 39, 42, 0.5);
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.advantage-card:hover {
+  transform: translateY(-10px);
+}
+
+.advantage-icon {
+  font-size: 2.5rem;
+  color: #a855f7;
+  margin-bottom: 20px;
+}
+
+.advantage-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.advantage-card p {
+  color: #d1d5db;
+}
+
+/* Как это работает */
+.how-it-works {
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.steps {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 50px;
+  flex-wrap: wrap;
+}
+
+.step {
+  flex: 1;
+  min-width: 250px;
+  max-width: 300px;
+  position: relative;
+  padding: 30px;
+  background: rgba(39, 39, 42, 0.5);
+  border-radius: 12px;
+}
+
+.step-number {
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 50px;
+  background: #a855f7;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.step h3 {
+  font-size: 1.3rem;
+  margin: 20px 0 15px;
+}
+
+.step p {
+  color: #d1d5db;
+}
+
+.hero-title {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  background: linear-gradient(to right, #a855f7, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  color: #d1d5db;
+}
+
+/* Тарифы */
+.pricing {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.section-title {
+  font-size: 2rem;
+  margin-bottom: 40px;
+  text-align: center;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(to right, #a855f7, #ec4899);
+}
+
+.pricing-cards {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.pricing-card {
+  background: rgba(39, 39, 42, 0.8);
+  border-radius: 12px;
+  padding: 30px;
+  width: 280px;
+  position: relative;
+  border: 1px solid #3f3f46;
+  transition: all 0.3s ease;
+}
+
+.pricing-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.highlight {
+  border-color: #a855f7;
+}
+
+.popular-badge {
+  position: absolute;
+  top: -12px;
+  right: 20px;
+  background: #a855f7;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.price {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 20px 0;
+  color: #f4f4f5;
+}
+
+.features-list {
+  text-align: left;
+  margin: 20px 0;
+  list-style: none;
+  padding: 0;
+}
+
+.features-list li {
+  margin-bottom: 10px;
+  padding-left: 5px;
+}
+
+.features-list i {
+  color: #10b981;
+  margin-right: 8px;
+}
+
+.btn-buy {
+  width: 100%;
+  padding: 12px;
+  background: #a855f7;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 20px;
+}
+
+.btn-buy:hover {
+  background: #9333ea;
+}
+
+/* Футер */
+.footer {
+  text-align: center;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.3);
+  margin-top: 60px;
+  color: #9ca3af;
+}
+
+/* Адаптив */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .pricing-card {
+    width: 100%;
+    max-width: 350px;
+  }
+}
+
+/* Аутентификация */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(to right, #111827, #1e293b);
+  padding: 20px;
+}
+
+.auth-card {
+  background: rgba(39, 39, 42, 0.9);
+  border-radius: 12px;
+  padding: 40px;
+  width: 100%;
+  max-width: 450px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  border: 1px solid #3f3f46;
+}
+
+.auth-card h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #f4f4f5;
+  font-size: 1.8rem;
+}
+
+.auth-card h2 i {
+  margin-right: 10px;
+  color: #a855f7;
+}
+
+.auth-form .form-group {
+  margin-bottom: 20px;
+}
+
+.auth-form label {
+  display: block;
+  margin-bottom: 8px;
+  color: #d1d5db;
+  font-weight: 500;
+}
+
+.auth-form label i {
+  width: 20px;
+  margin-right: 8px;
+  color: #a855f7;
+}
+
+.auth-form input {
+  width: 100%;
+  padding: 12px 15px;
+  background: #1f1f1f;
+  border: 1px solid #3f3f46;
+  border-radius: 8px;
+  color: white;
+  font-size: 16px;
+  transition: all 0.3s;
+}
+
+.auth-form input:focus {
+  border-color: #a855f7;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.2);
+}
+
+.auth-submit-btn {
+  width: 100%;
+  padding: 14px;
+  background: #a855f7;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 10px;
+}
+
+.auth-submit-btn:hover {
+  background: #9333ea;
+}
+
+.auth-footer {
+  text-align: center;
+  margin-top: 20px;
+  color: #9ca3af;
+}
+
+.auth-footer a {
+  color: #a855f7;
+  text-decoration: none;
+}
+
+.auth-footer a:hover {
+  text-decoration: underline;
+}
+
+.error {
+  color: #ef4444;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.forgot-password {
+  display: block;
+  text-align: right;
+  margin-top: 5px;
+  font-size: 14px;
+  color: #a855f7;
+}
+
+/* Страница аккаунта */
+.account-container {
+    display: flex;
+    min-height: 100vh;
+    background-color: #111827;
+    color: white;
+}
+
+.account-sidebar {
+    width: 300px;
+    background: rgba(39, 39, 42, 0.8);
+    padding: 30px;
+    border-right: 1px solid #3f3f46;
+}
+
+.profile-card {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.avatar-wrapper {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 20px;
+}
+
+.profile-avatar, .default-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #a855f7;
+}
+
+.default-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #3f3f46;
+    font-size: 40px;
+    color: #a855f7;
+}
+
+.avatar-edit-btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 36px;
+    height: 36px;
+    background: #a855f7;
+    border: none;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.username {
+    font-size: 1.5rem;
+    margin: 10px 0 5px;
+}
+
+.email {
+    color: #9ca3af;
+    margin-bottom: 20px;
+}
+
+.subscription-status .badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+}
+
+.badge.active {
+    background: rgba(74, 222, 128, 0.2);
+    color: #4ade80;
+}
+
+.badge.inactive {
+    background: rgba(248, 113, 113, 0.2);
+    color: #f87171;
+}
+
+.account-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.menu-item {
+    padding: 12px 15px;
+    border-radius: 8px;
+    color: #d1d5db;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s;
+}
+
+.menu-item:hover {
+    background: rgba(168, 85, 247, 0.1);
+}
+
+.menu-item.active {
+    background: #a855f7;
+    color: white;
+}
+
+.account-content {
+    flex: 1;
+    padding: 40px;
+}
+
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.edit-btn {
+    background: #a855f7;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.form-section {
+    margin-bottom: 30px;
+    background: rgba(39, 39, 42, 0.5);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #3f3f46;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #d1d5db;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 15px;
+    background: #1f1f1f;
+    border: 1px solid #3f3f46;
+    border-radius: 8px;
+    color: white;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.cancel-btn, .save-btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.cancel-btn {
+    background: transparent;
+    border: 1px solid #3f3f46;
+    color: white;
+}
+
+.save-btn {
+    background: #a855f7;
+    border: none;
+    color: white;
+}
+
+.subscription-section {
+    margin-top: 40px;
+}
+
+.subscription-card {
+    padding: 25px;
+    border-radius: 12px;
+    margin-top: 15px;
+}
+
+.subscription-card.active {
+    background: rgba(74, 222, 128, 0.1);
+    border: 1px solid #4ade80;
+}
+
+.subscription-card.inactive {
+    background: rgba(248, 113, 113, 0.1);
+    border: 1px solid #f87171;
+}
+
+.subscription-card h3 {
+    margin-bottom: 10px;
+}
+
+.subscribe-btn, .manage-subscription-btn {
+    margin-top: 15px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.subscribe-btn {
+    background: #a855f7;
+    color: white;
+}
+
+.manage-subscription-btn {
+    background: transparent;
+    border: 1px solid #4ade80;
+    color: #4ade80;
+}
+
+/* Модальное окно */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: #1f1f1f;
+    padding: 30px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.avatar-preview {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.avatar-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#avatarUpload {
+    display: block;
+    margin: 20px auto;
+}
+
+.upload-btn {
+    display: block;
+    margin: 0 auto;
+    padding: 10px 25px;
+    background: #a855f7;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Стиль кнопки скачивания */
+.download-btn {
+  padding: 8px 15px;
+  background: #10b981;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  transition: all 0.3s;
+  margin-right: 10px;
+}
+
+.download-btn:hover {
+  background: #0d9f6e;
+  transform: translateY(-2px);
+}
+
+.download-btn i {
+  font-size: 14px;
+}
+
+/* Адаптация для мобильных */
+@media (max-width: 768px) {
+  .download-btn {
+    padding: 6px 10px;
+    font-size: 14px;
+    margin-right: 5px;
+  }
+
+  .download-btn span {
+    display: none;
+  }
+
+  .download-btn i {
+    font-size: 16px;
+  }
+}
+
+/* Страница требования подписки */
+.subscription-required {
+    max-width: 600px;
+    margin: 100px auto;
+    text-align: center;
+    padding: 40px;
+    background: rgba(39, 39, 42, 0.8);
+    border-radius: 12px;
+    border: 1px solid #a855f7;
+}
+
+.subscription-required h1 {
+    color: #a855f7;
+    margin-bottom: 20px;
+}
+
+.subscription-required p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+.btn-subscribe {
+    padding: 12px 30px;
+    background: #a855f7;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.btn-subscribe:hover {
+    background: #9333ea;
+    transform: translateY(-2px);
+}
+
+/* Уведомления */
+.notification {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #4CAF50;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 8px;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.notification.show {
+    opacity: 1;
+}
+
+/* Форма загрузки аватара */
+.avatar-upload-input {
+    display: none;
+}
+
+.upload-btn {
+    display: block;
+    margin: 20px auto 0;
+    padding: 10px 25px;
+    background: #a855f7;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.upload-btn:hover {
+    background: #9333ea;
+}
+
+/* Адаптация модального окна */
+.modal-content {
+    text-align: center;
+}
+
+.avatar-preview {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+}
+
+.avatar-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

@@ -1,0 +1,51 @@
+{% extends 'team_list/base.html' %}
+
+{% block title %}Phantom Team - {{ member.name }}{% endblock %}
+
+{% block content %}
+<div class="member-detail-container">
+    <div class="member-detail-header">
+        <a href="{% url 'members_list' %}" class="back-button">
+            <i class="fas fa-arrow-left"></i> Назад к команде
+        </a>
+        <h1>Профиль участника</h1>
+    </div>
+    
+    <div class="member-detail-card">
+        <div class="member-detail-avatar">
+            <div class="avatar-placeholder-large">{{ member.name|first }}{{ member.surnames|first|default:"" }}</div>
+        </div>
+        
+        <div class="member-detail-info">
+            <div class="member-detail-name">
+                <h2>{{ member.name }}</h2>
+                {% if member.surnames %}
+                <p class="member-detail-aliases">AKA: {{ member.surnames }}</p>
+                {% endif %}
+                <div class="member-detail-role" style="--role-color: {{ member.role.color }};">
+                    {{ member.role.name }}
+                </div>
+            </div>
+            
+            <div class="member-detail-about">
+                <h3>Обо мне</h3>
+                <p>{{ member.about|linebreaks }}</p>
+            </div>
+            
+            <div class="member-detail-links">
+                <h3>Контакты</h3>
+                <div class="social-links-grid">
+                    {% for link in member.social_links.all %}
+                    <a href="{{ link.url }}" target="_blank" class="social-link-large" data-platform="{{ link.platform }}">
+                        <i class="fab {{ link.icon }}"></i>
+                        <span>{{ link.get_platform_display }}</span>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+

@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}PC Cleaner Pro{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+    <link rel="stylesheet" href="{% static 'css/team.css' %}">
+
+</head>
+<body>
+    <!-- Шапка -->
+    <header class="header">
+        <div class="logo">PC Cleaner Pro</div>
+        <nav class="header-nav">
+            <a href="/download-launcher" class="download-btn">
+                <i class="fas fa-download"></i> Скачать лаунчер
+            </a>
+            <div class="dropdown">
+                <button class="nav-btn"><i class="fas fa-users"></i> Phantom Team</button>
+                <div class="dropdown-content">
+                    <a href="{% url 'information_about_team' %}">О проекте</a>
+                    <a href="{% url 'members_list' %}">Разработчики</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="nav-btn"><i class="fas fa-share-alt"></i> Соцсети</button>
+                <div class="dropdown-content">
+                    <a href="{% url 'telegram' %}"><i class="fab fa-telegram"></i> Telegram</a>
+                    <a href="{% url 'discord' %}"><i class="fab fa-discord"></i> Discord</a>
+                </div>
+            </div>
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'account' %}" class="nav-btn auth-btn"><i class="fas fa-user"></i> Профиль </a>
+            {% else %}
+                <a href="{% url 'login' %}" class="nav-btn auth-btn"><i class="fas fa-user"></i> Вход </a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <!-- Основной контент -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <p>© 2025 PC Cleaner Pro. Все права защищены.</p>
+    </footer>
+
+    <script src="{% static 'js/script.js' %}"></script>
+    <script src="{% static 'js/text.js' %}"></script>
+</body>
+</html> 
