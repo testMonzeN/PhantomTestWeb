@@ -39,50 +39,6 @@ document.querySelector('.auth-form')?.addEventListener('submit', (e) => {
   }
 });
 
-
-// Редактирование профиля
-const editProfileBtn = document.getElementById('editProfileBtn');
-const cancelEditBtn = document.getElementById('cancelEditBtn');
-const saveChangesBtn = document.getElementById('saveChangesBtn');
-const inputs = document.querySelectorAll('#profileForm input');
-
-editProfileBtn.addEventListener('click', () => {
-    inputs.forEach(input => {
-        input.removeAttribute('readonly');
-    });
-    editProfileBtn.style.display = 'none';
-    cancelEditBtn.style.display = 'inline-block';
-    saveChangesBtn.style.display = 'inline-block';
-});
-
-cancelEditBtn.addEventListener('click', () => {
-    inputs.forEach(input => {
-        input.setAttribute('readonly', true);
-    });
-    editProfileBtn.style.display = 'inline-block';
-    cancelEditBtn.style.display = 'none';
-    saveChangesBtn.style.display = 'none';
-});
-
-// Модальное окно смены аватара
-const changeAvatarBtn = document.getElementById('changeAvatarBtn');
-const avatarModal = document.getElementById('avatarModal');
-const closeBtn = document.querySelector('.close-btn');
-
-changeAvatarBtn.addEventListener('click', () => {
-    avatarModal.style.display = 'flex';
-});
-
-closeBtn.addEventListener('click', () => {
-    avatarModal.style.display = 'none';
-});
-
-window.addEventListener('click', (e) => {
-    if (e.target === avatarModal) {
-        avatarModal.style.display = 'none';
-    }
-});
-
 // Превью аватара
 document.addEventListener('DOMContentLoaded', function() {
     const avatarForm = document.getElementById('avatarForm');
@@ -333,3 +289,4 @@ document.addEventListener('DOMContentLoaded', function() {
         }, delay);
     });
 });
+

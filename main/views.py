@@ -15,7 +15,7 @@ def redirect_to_telegram(request):
 def redirect_to_discord(request):
     return redirect('https://discord.gg/phantomdlc/')
 
-#TODO поставить нормальный файл!
+
 @login_required
 def download_launcher(request):
     if not request.user.is_subscribed:

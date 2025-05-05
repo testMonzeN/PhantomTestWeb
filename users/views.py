@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.http import JsonResponse
-from .forms import CustomUserCreationForm, CustomAuthenticationForm
+from .forms import CustomUserCreationForm, CustomAuthenticationForm    
 from .models import CustomUser
 
 
@@ -24,8 +24,7 @@ def account(request):
         'email': user.email,
         'is_subscribed': user.is_subscribed
     })
-
-
+    
 
 def register(request):
     if request.method == 'POST':
@@ -37,6 +36,7 @@ def register(request):
     else:
         form = CustomUserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
+
 
 def user_login(request):
     if request.method == 'POST':
@@ -51,7 +51,6 @@ def user_login(request):
     else:
         form = CustomAuthenticationForm()
     return render(request, 'registration/login.html', {'form': form})
-
 
 
 

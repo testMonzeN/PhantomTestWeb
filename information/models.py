@@ -15,11 +15,15 @@ class ClanMember(models.Model):
 
 class LinksMember(models.Model):
     PLATFORMS = [
+        ('spotify', 'Spotify'),
+        ('youtube', 'YouTube'),
+        ('instagram', 'Instagram'),
+        ('tiktok', 'TikTok'),
+        ('twitch', 'Twitch'),
+        ('twitter', 'Twitter'),
+        ('steam', 'Steam'),
         ('telegram', 'Telegram'),
         ('discord', 'Discord'), 
-        ('funpay', 'FunPay'),
-        ('guns_lol', 'Guns.lol'),
-        ('fakebio', 'FakeBio'),
         ('github', 'GitHub'),
         ('gitlab', 'GitLab'),
         ('other', 'Other Site')
@@ -35,13 +39,21 @@ class LinksMember(models.Model):
 
     def icon(self):
         icons = {
-            'telegram': 'fa-telegram',
-            'discord': 'fa-discord',
-            'funpay': 'fa-shopping-cart',
-            'guns_lol': 'fa-gun',
-            'fakebio': 'fa-address-card',
+            'spotify': 'fa-spotify',
+            
             'github': 'fa-github',
             'gitlab': 'fa-gitlab',
+            
+            'telegram': 'fa-telegram',
+            'discord': 'fa-discord',
+            'youtube': 'fa-youtube',
+            'instagram': 'fa-instagram',
+            'tiktok': 'fa-tiktok',
+            'twitch': 'fa-twitch',
+            'twitter': 'fa-twitter',
+            
+            'steam': 'fa-steam',
+            
             'other': 'fa-link'
         }
         return icons.get(self.platform, 'fa-link')
@@ -75,6 +87,6 @@ class Role(models.Model):
         default='#FFFFFF',
     )
     
-    #color = models.CharField(max_length=7, choices=COLORS, default='#FFFFFF', help_text='Выберите цвет роли')
+    #color = models.CharField(max_length=7, choices=COLORS, default='#FFFFFF')
     def __str__(self):
         return self.name
