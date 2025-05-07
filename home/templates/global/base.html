@@ -1,0 +1,55 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phantom</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    {% block extra_styles %}{% endblock %}
+</head>
+<body>
+    <div class="content-wrapper">
+        <header class="navbar">
+            <div class="container">
+                <a href="{% url 'home' %}" class="logo">Phantom</a>
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="{% url 'home' %}" {% if request.path == '/' %}class="active"{% endif %}>Home</a></li>
+                        <li><a href="{% url 'features' %}" {% if request.path == '/features/' %}class="active"{% endif %}>Features</a></li>
+                        <li><a href="{% url 'pricing' %}" {% if request.path == '/pricing/' %}class="active"{% endif %}>Pricing</a></li>
+                        <li><a href="{% url 'contacts' %}" {% if request.path == '/contacts/' %}class="active"{% endif %}>Contacts</a></li>
+                    </ul>
+                    <div class="nav-right">
+                        <div class="lang-switcher">EN</div>
+                        {% if request.user.is_authenticated %}
+                            <a href="{% url 'cabinet' %}" class="cabinet-btn">Cabinet</a>
+                        {% else %}
+                            <a href="{% url 'login' %}" class="cabinet-btn">Login</a>
+                        {% endif %}
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        {% block content %}
+        {% endblock %}
+    </div>
+    
+    <footer class="dark-footer">
+        <div class="container">
+            <p>© 2025 Phantom. All rights reserved.</p>
+            <div class="social-links">
+                <a href="https://t.me/phantom_dlc" class="collapse">Telegram</a>
+                <a href="https://discord.gg/phantomdlc" data-target="discord" class="collapse">Discord</a>
+                <a href="#" data-target="vk" class="collapse">VK</a>
+            </div>
+        </div>
+    </footer>
+    <script src="{% static 'js/script.js' %}"></script>
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>
+
+
