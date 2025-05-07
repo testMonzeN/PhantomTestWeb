@@ -6,7 +6,3 @@ django-allauth
 django-widget-tweaks
 django-ratelimit
 django-rest-framework
-django-allauth-2fa
-django-allauth-2fa-totp
-django-allauth-2fa-yubikey
-django-allauth-2fa-yubico
