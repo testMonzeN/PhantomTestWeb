@@ -1,0 +1,11 @@
+Django
+requests
+djangorestframework
+django-ratelimit
+django-allauth
+django-crispy-forms
+django-crispy-tailwind
+django-allauth-2fa
+django-allauth-2fa-totp
+django-allauth-2fa-yubikey
+django-allauth-2fa-yubico
