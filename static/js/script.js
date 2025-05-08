@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Language switcher dropdown
     const langSwitcher = document.querySelector('.lang-switcher');
     if (langSwitcher) {
         langSwitcher.addEventListener('click', function(e) {
@@ -12,7 +11,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
@@ -29,13 +27,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Initialize carousel if present on the page
     if (document.querySelector('.pricing-carousel')) {
         initCarousel();
     }
 });
 
-// Carousel Functionality
 function initCarousel() {
     const carousel = document.querySelector('.pricing-carousel');
     const items = document.querySelectorAll('.carousel-item');
@@ -50,7 +46,6 @@ function initCarousel() {
     const visibleItems = Math.floor(carousel.offsetWidth / itemWidth);
     const totalItems = items.length;
     
-    // Create dots
     for (let i = 0; i < totalItems - visibleItems + 1; i++) {
         const dot = document.createElement('div');
         dot.classList.add('dot');
@@ -65,11 +60,9 @@ function initCarousel() {
     
     const dots = document.querySelectorAll('.dot');
     
-    // Event listeners for navigation
     prevBtn.addEventListener('click', goToPrev);
     nextBtn.addEventListener('click', goToNext);
     
-    // For touch devices
     let touchStartX = 0;
     let touchEndX = 0;
     
@@ -90,7 +83,6 @@ function initCarousel() {
         }
     }
     
-    // Navigation functions
     function goToPrev() {
         if (currentIndex > 0) {
             goToSlide(currentIndex - 1);
@@ -118,16 +110,13 @@ function initCarousel() {
         carousel.style.transform = `translateX(${offset}px)`;
     }
     
-    // Responsive handling
     window.addEventListener('resize', function() {
         const newVisibleItems = Math.floor(carousel.offsetWidth / items[0].offsetWidth);
         
         if (newVisibleItems !== visibleItems) {
-            // Reset carousel position
             currentIndex = 0;
             updateCarousel();
             
-            // Update dots
             dotsContainer.innerHTML = '';
             for (let i = 0; i < totalItems - newVisibleItems + 1; i++) {
                 const dot = document.createElement('div');

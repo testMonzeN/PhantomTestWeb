@@ -6,6 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Phantom | От читеров для читеров</title>
+    <link rel="icon" href="{% static 'img/phantom-final-logo.svg' %}" type="image/svg+xml">
+    <link rel="shortcut icon" href="{% static 'img/phantom-final-logo.svg' %}" type="image/svg+xml">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     {% block extra_styles %}{% endblock %}
 </head>
@@ -13,7 +15,9 @@
     <div class="content-wrapper">
         <header class="navbar">
             <div class="container">
-                <a href="{% url 'home' %}" class="logo">Phantom</a>
+                <a href="{% url 'home' %}" class="logo">
+                    <img>Phantom</img>
+                </a>
                 <nav>
                     <ul class="nav-links">
                         <li><a href="{% url 'home' %}" {% if request.path == '/' %}class="active"{% endif %}>Home</a></li>

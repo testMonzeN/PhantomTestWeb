@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth import login
-from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import CustomUserRegisterForm, CustomLoginForm, CustomUserChangeForm
 from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import check_password
@@ -125,8 +124,9 @@ class ActivateKeyView(View):
             
         return redirect('cabinet')
 
+
 # Изменение пользователя
-# TODO: Добавить проверку на аутентификацию пользователя + html
+# TODO: Доделать изменение пользователя + html
 class UserChangeView(View):   
     def get(self, request):
         form = CustomUserChangeForm(instance=request.user)
