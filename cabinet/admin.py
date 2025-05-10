@@ -6,4 +6,3 @@ admin.site.register(User)
 admin.site.register(Role)
 admin.site.register(LicenseKey)
 admin.site.register(SubscriptionType)
-

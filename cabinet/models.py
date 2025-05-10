@@ -132,3 +132,8 @@ class LicenseKey(models.Model):
             self.expires_at = timezone.now() + datetime.timedelta(days=30) 
             
         super().save(*args, **kwargs)
+
+
+
+
+    

@@ -8,7 +8,10 @@ from .models import User, LicenseKey
 from django.utils import timezone
 import datetime
 from django.contrib import messages
-
+from logs.views import LogsView
+import os
+from django.http import HttpResponse
+from django.conf import settings
 
 # Личный кабинет
 class CabinetView(View):
@@ -76,6 +79,7 @@ class LoginView(View):
                 
                 form.add_error(None, "Неверное имя пользователя или пароль")
         
+        LogsView(request.user.username, 'Вход в систему')
         return render(request, 'login/login.html', {'form': form})
 
 
@@ -121,20 +125,34 @@ class ActivateKeyView(View):
             
         except LicenseKey.DoesNotExist:
             messages.error(request, 'Недействительный или уже использованный ключ')
-            
+        
+        LogsView(user, f'Ключ {key_value} успешно активирован! Добавлено {license_key.duration_days} дней подписки.')
         return redirect('cabinet')
 
 
-# Изменение пользователя
-# TODO: Доделать изменение пользователя + html
+# Изменение пароля пользователя
 class UserChangeView(View):   
     def get(self, request):
-        form = CustomUserChangeForm(instance=request.user)
+        form = CustomUserChangeForm(user=request.user)
         return render(request, 'account/change.html', {'form': form})
     
     def post(self, request):
-        form = CustomUserChangeForm(request.POST, instance=request.user)
+        form = CustomUserChangeForm(user=request.user, data=request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Пароль успешно изменен')
+            LogsView(request.user, 'Пароль успешно изменен')
             return redirect('cabinet')
         return render(request, 'account/change.html', {'form': form})
+
+
+class DownloadLauncherView(View):
+    def get(self, request):
+        file_path = os.path.join(settings.BASE_DIR, 'YOUR_FILE.txt') # YOUR_FILE.txt - изменить на будуший лаунчер 
+        file_name = 'launcher.txt' # launcher.txt -> phantom.exr 
+
+        if os.path.exists(file_path):
+            with open(file_path, 'rb') as fh:
+                response = HttpResponse(fh.read(), content_type="application/vnd.ms-exe")
+                response['Content-Disposition'] = f'inline; filename={file_name}'
+                return response

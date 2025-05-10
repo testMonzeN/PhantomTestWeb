@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 from .models import User
 from django.contrib.auth import authenticate
 
@@ -39,12 +39,19 @@ class CustomLoginForm(forms.Form):
         return cleaned_data
 
 
-# Изменение пользователя
-class CustomUserChangeForm(UserChangeForm):
-    username = forms.CharField(max_length=100)
-    email = forms.EmailField(max_length=100)
+# Форма смены пароля
+class CustomUserChangeForm(PasswordChangeForm):
+    old_password = forms.CharField(
+        label="Текущий пароль",
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+    )
+    new_password1 = forms.CharField(
+        label="Новый пароль",
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+    )
+    new_password2 = forms.CharField(
+        label="Подтверждение нового пароля",
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+    )
 
-    class Meta:
-        model = User
-        fields = ('username', 'email')
 

@@ -1,0 +1,68 @@
+{% extends 'global/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="login-wrapper">
+    <div class="container">
+        <div class="login-content dark-content-box">
+            <div class="login-form-container">
+                <div class="login-header">
+                    <h1>Изменение данных</h1>
+                    <p>Обновите ваши персональные данные</p>
+                </div>
+                
+                <form method="post" class="login-form">
+                    {% csrf_token %}
+                    
+                    {% if form.non_field_errors %}
+                    <div class="error-message">
+                        {% for error in form.non_field_errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    
+                    {% for field in form %}
+                    {% if field.name != 'password' %}
+                    <div class="form-group">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {% if field.field.widget.input_type %}
+                        <input type="{{ field.field.widget.input_type }}" name="{{ field.name }}" 
+                               id="{{ field.id_for_label }}" value="{{ field.value|default:'' }}" 
+                               {% if field.field.required %}required{% endif %}>
+                        {% else %}
+                        {{ field }}
+                        {% endif %}
+                        
+                        {% if field.errors %}
+                        <div class="error-message">
+                            {% for error in field.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        
+                        {% if field.help_text %}
+                        <div class="help-text">{{ field.help_text }}</div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="login-btn">Сохранить изменения</button>
+                    </div>
+                    
+                    <div class="form-links">
+                        <a href="{% url 'cabinet' %}" class="form-link"><i class="fas fa-arrow-left"></i> Вернуться в кабинет</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+{% endblock %}

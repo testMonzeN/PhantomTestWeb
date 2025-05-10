@@ -30,7 +30,70 @@ document.addEventListener('DOMContentLoaded', function() {
     if (document.querySelector('.pricing-carousel')) {
         initCarousel();
     }
+
+    // Эффекты для кнопок в форме изменения данных
+    if (document.querySelector('.change-form-container')) {
+        initChangeFormEffects();
+    }
 });
+
+function initChangeFormEffects() {
+    const buttons = document.querySelectorAll('.change-form-container .btn');
+    
+    buttons.forEach(button => {
+        // Эффект нажатия
+        button.addEventListener('mousedown', function() {
+            this.style.transform = 'translateY(2px)';
+            this.style.boxShadow = '0 2px 5px rgba(110, 72, 170, 0.3)';
+        });
+        
+        // Возврат к эффекту hover после отжатия
+        button.addEventListener('mouseup', function() {
+            this.style.transform = '';
+            this.style.boxShadow = '';
+        });
+        
+        // Отмена эффекта при выходе курсора за пределы кнопки
+        button.addEventListener('mouseleave', function() {
+            this.style.transform = '';
+            this.style.boxShadow = '';
+        });
+    });
+    
+    // Проверка изменений формы и активация кнопки сохранения
+    const form = document.querySelector('.change-form-container form');
+    if (form) {
+        const inputs = form.querySelectorAll('input, select, textarea');
+        const submitBtn = form.querySelector('button[type="submit"]');
+        
+        // Сохраняем изначальные значения полей
+        let initialValues = {};
+        inputs.forEach(input => {
+            initialValues[input.name] = input.value;
+        });
+        
+        // Отслеживание изменений
+        inputs.forEach(input => {
+            input.addEventListener('input', checkFormChanges);
+        });
+        
+        function checkFormChanges() {
+            let hasChanges = false;
+            
+            inputs.forEach(input => {
+                if (input.value !== initialValues[input.name]) {
+                    hasChanges = true;
+                }
+            });
+            
+            if (hasChanges) {
+                submitBtn.classList.add('btn-pulse');
+            } else {
+                submitBtn.classList.remove('btn-pulse');
+            }
+        }
+    }
+}
 
 function initCarousel() {
     const carousel = document.querySelector('.pricing-carousel');

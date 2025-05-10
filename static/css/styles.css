@@ -1050,7 +1050,6 @@ body::before {
     text-decoration: underline;
 }
 
-
 .key-activation-section {
     margin-top: 25px;
     padding-top: 20px;
@@ -1257,3 +1256,156 @@ body::before {
         width: 100%;
     }
 }
+
+/* Стили для страницы изменения данных пользователя */
+.change-form-container {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.change-form-container .card {
+    background-color: rgba(18, 18, 18, 0.85);
+    border: none;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.change-form-container .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+}
+
+.change-form-container .card-header {
+    background: linear-gradient(90deg, var(--accent-color), var(--accent-light));
+    border-bottom: none;
+    border-radius: 8px 8px 0 0 !important;
+    padding: 20px;
+}
+
+.change-form-container .card-body {
+    padding: 30px;
+}
+
+.change-form-container label {
+    color: #e0e0e0;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+}
+
+.change-form-container .form-control {
+    background-color: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    padding: 12px 15px;
+    height: auto;
+    transition: all 0.3s ease;
+}
+
+.change-form-container .form-control:focus {
+    background-color: rgba(255, 255, 255, 0.09);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(110, 72, 170, 0.25);
+}
+
+.change-form-container .input-group {
+    margin-bottom: 5px;
+}
+
+.change-form-container .text-danger {
+    color: #ff6b6b !important;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.change-form-container .form-text {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 12px;
+    margin-top: 8px;
+}
+
+.change-form-container .alert-info {
+    background-color: rgba(23, 162, 184, 0.15);
+    border-color: rgba(23, 162, 184, 0.2);
+    color: #9fcdff;
+}
+
+/* Новые стили кнопок в соответствии с кнопками из index.html */
+.change-form-container .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 14px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.change-form-container .btn-primary {
+    background-color: rgba(30, 30, 30, 0.7);
+    color: var(--text-color);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: none;
+}
+
+.change-form-container .btn-primary:hover {
+    background-color: rgba(110, 72, 170, 0.2);
+    border-color: var(--accent-color);
+    transform: translateY(-2px);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.change-form-container .btn-primary:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+.change-form-container .btn-outline-secondary {
+    background-color: rgba(30, 30, 30, 0.7);
+    color: var(--text-color);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: none;
+}
+
+.change-form-container .btn-outline-secondary:hover {
+    background-color: rgba(110, 72, 170, 0.2);
+    border-color: var(--accent-color);
+    transform: translateY(-2px);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.change-form-container .btn-outline-secondary:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+.change-form-container .btn i {
+    color: var(--accent-light);
+    font-size: 14px;
+    width: 16px;
+    text-align: center;
+}
+
+/* Анимация пульсации для кнопки при изменении формы */
+@keyframes btnPulse {
+    0% { box-shadow: 0 0 0 0 rgba(110, 72, 170, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(110, 72, 170, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(110, 72, 170, 0); }
+}
+
+.btn-pulse {
+    animation: btnPulse 1.5s infinite;
+}
+
+
+
+
+
+
+
