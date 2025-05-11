@@ -17,13 +17,14 @@
                         <div class="user-status">DEFAULT USER</div>
                     {% endif %}
                     <div class="user-name">{{ user.username }} <span class="user-id">uid {{ user.id }}</span></div>
-                    <a href="#" class="change-username">Change username <i class="fas fa-edit"></i></a>
+                    
+                    <a></a>
                     
                     <div class="account-actions">
                         <a href="{% url 'download_launcher' %}" class="account-action-btn">
                             <i class="fas fa-download"></i> Download client
                         </a>
-                        <a href="#" class="account-action-btn">
+                        <a class="account-action-btn feature-coming-soon" data-feature-name="2FA Authenticator">
                             <i class="fas fa-shield-alt"></i> 2FA Authenticator
                         </a>
                         <a href="{% url 'change' %}" class="account-action-btn">
@@ -144,7 +145,7 @@
                         <form action="{% url 'activate_key' %}" method="post" class="key-activation-form">
                             {% csrf_token %}
                             <div class="form-group">
-                                <input type="text" name="license_key" placeholder="Введите лицензионный ключ" required>
+                                <input type="text" name="license_key" placeholder="XXXX-XXXX-XXXX-XXXX" required>
                                 <button class="btn" type="submit">Активировать</button>
                             </div>
                             {% if key_activation_message %}

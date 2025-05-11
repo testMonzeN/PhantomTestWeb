@@ -156,3 +156,14 @@ class DownloadLauncherView(View):
                 response = HttpResponse(fh.read(), content_type="application/vnd.ms-exe")
                 response['Content-Disposition'] = f'inline; filename={file_name}'
                 return response
+
+
+# views.py
+def some_view(request):
+    context = {
+        'feature_status': {
+            'feature_name': 'Отправка приглашений',
+            'is_available': False  # или проверка из настроек/базы данных
+        }
+    }
+    return render(request, 'template.html', context)

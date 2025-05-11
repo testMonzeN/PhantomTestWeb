@@ -1404,8 +1404,113 @@ body::before {
 }
 
 
+.developer-info {
+    margin-top: 10px;
+    font-size: 0.9em;
+    text-align: center;
+}
+
+.developer-info a {
+    color: #6e48aa;
+    text-decoration: none;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.developer-info a:hover {
+    color: #9470d7;
+}
+
+.developer-info a::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -3px;
+    left: 0;
+    background: #6e48aa;
+    transition: all 0.3s ease;
+}
+
+.developer-info a:hover::after {
+    width: 100%;
+}
 
 
 
+.phantom-notification {
+    border: 1px solid #6e48aa;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(110, 72, 170, 0.5);
+}
+.phantom-notification-title {
+    color: #9470d7;
+    font-weight: 600;
+}
+.phantom-btn:focus {
+    box-shadow: 0 0 0 3px rgba(110, 72, 170, 0.5);
+}
+.swal2-timer-progress-bar {
+    background: #6e48aa;
+}
 
 
+.phantom-notification {
+    position: fixed;
+    bottom: 20px;
+    right: -400px; 
+    background: #121212;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    width: 320px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 9999;
+    transition: right 0.3s ease;
+    border-left: 3px solid #6e48aa;
+}
+
+.phantom-notification.visible {
+    right: 20px; 
+}
+
+.phantom-notification.hiding {
+    right: -400px;
+}
+
+.info-icon {
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+.notification-content {
+    flex-grow: 1;
+}
+
+.notification-title {
+    font-weight: 600;
+    color: #9470d7;
+    margin-bottom: 2px;
+}
+
+.notification-message {
+    font-size: 14px;
+    color: #e0e0e0;
+}
+
+.notification-close {
+    background: transparent;
+    color: #6e48aa;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 10px;
+    line-height: 1;
+}
+
+.notification-close:hover {
+    color: #9470d7;
+}

@@ -5,17 +5,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phantom | От читеров для читеров</title>
+
+    <title>Phantom</title>
     <link rel="icon" href="{% static 'img/phantom-final-logo.svg' %}" type="image/svg+xml">
     <link rel="shortcut icon" href="{% static 'img/phantom-final-logo.svg' %}" type="image/svg+xml">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     {% block extra_styles %}{% endblock %}
+
+    <script>const currentUsername = "{{ request.user.username|default:'guest'}}";</script>
 </head>
 <body>
     <div class="content-wrapper">
         <header class="navbar">
             <div class="container">
-                <a href="{% url 'home' %}" class="logo">
+                <a class="logo">
                     <img>Phantom</img>
                 </a>
                 <nav>
@@ -49,11 +53,16 @@
                 <a href="https://discord.gg/phantomdlc" data-target="discord" class="collapse">Discord</a>
                 <a href="#" data-target="vk" class="collapse">VK</a>
             </div>
+            <div class="developer-info">
+                <p>code by <a href="https://github.com/testMonzeN" target="_blank">karadev</a></p>
+            </div>
         </div>
     </footer>
     <script src="{% static 'js/script.js' %}"></script>
     {% block extra_scripts %}{% endblock %}
 </body>
 </html>
+
+
 
 

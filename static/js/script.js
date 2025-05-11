@@ -109,8 +109,9 @@ function initCarousel() {
     const visibleItems = Math.floor(carousel.offsetWidth / itemWidth);
     const totalItems = items.length;
     
+    console.log(totalItems, visibleItems);
     for (let i = 0; i < totalItems - visibleItems + 1; i++) {
-        const dot = document.createElement('div');
+        const dot = document.createElement('div'); 
         dot.classList.add('dot');
         if (i === 0) dot.classList.add('active');
         dot.dataset.index = i;
@@ -195,3 +196,118 @@ function initCarousel() {
         }
     });
 }
+
+document.title = "Phantom";
+document.addEventListener('DOMContentLoaded', function() {
+    const baseTitle = "Phantom";
+    const phrases = [
+        "| Нечто большее",
+        "| Скрытие читов",
+        "| Welcome to Phantom",
+        "| Welcome " + currentUsername,
+    ];
+    
+    let currentPhrase = 0;
+    let currentChar = 0;
+    let isDeleting = false;
+    let isEnd = false;
+    
+    function typeTitle() {
+        const phraseText = phrases[currentPhrase];
+        const fullText = phraseText.substring(0, currentChar);
+        
+        document.title = baseTitle + " " + fullText;
+        
+        // печать
+        if (!isDeleting && currentChar <= phraseText.length) {
+            currentChar++;
+            
+            if (currentChar > phraseText.length) {
+                isEnd = true;
+                isDeleting = true;
+                setTimeout(typeTitle, 1500);
+                return;
+            }
+        }
+        
+        // удаление
+        if (isDeleting && currentChar >= 0) {
+            currentChar--;
+            
+            if (currentChar === 0) {
+                isDeleting = false;
+                currentPhrase = (currentPhrase + 1) % phrases.length;
+            }
+        }
+        
+        // скорость анимации
+        const typingSpeed = isDeleting ? 50 : 200;
+        const nextStep = isEnd ? 0 : typingSpeed;
+        isEnd = false;
+        
+        setTimeout(typeTitle, nextStep);
+    }
+    
+    typeTitle();
+});
+
+
+// Уведомление
+function showComingSoonNotification(featureName) {
+    const notification = document.createElement('div');
+    notification.className = 'phantom-notification';
+    
+    notification.innerHTML = `
+        <div class="info-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <circle cx="8" cy="8" r="7.5" stroke="#6e48aa"/>
+                <text x="8" y="12" text-anchor="middle" fill="#6e48aa" style="font-size: 12px; font-weight: bold;">i</text>
+            </svg>
+        </div>
+        <div class="notification-content">
+            <div class="notification-title">Coming soon</div>
+            <div class="notification-message">This feature is coming soon</div>
+        </div>
+        <button class="notification-close">&times;</button>
+    `;
+    
+    // Добавляем уведомление
+    document.body.appendChild(notification);
+    
+    // Закрытия
+    notification.querySelector('.notification-close').addEventListener('click', function() {
+        notification.classList.add('hiding');
+        setTimeout(() => {
+            if (notification.parentNode) {
+                document.body.removeChild(notification);
+            }
+        }, 300);
+    });
+    
+    setTimeout(() => {
+        notification.classList.add('hiding');
+        setTimeout(() => {
+            if (notification.parentNode) {
+                document.body.removeChild(notification);
+            }
+        }, 300);
+    }, 2000);
+    
+    setTimeout(() => {
+        notification.classList.add('visible');
+    }, 10);
+}
+
+// Стили
+document.addEventListener('DOMContentLoaded', function() {
+    const style = document.createElement('style');
+    document.head.appendChild(style);
+    
+    document.querySelectorAll('.feature-coming-soon').forEach(element => {
+        element.addEventListener('click', function(e) {
+            e.preventDefault();
+            showComingSoonNotification();
+        });
+    });
+});
+
