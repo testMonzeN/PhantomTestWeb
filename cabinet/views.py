@@ -12,6 +12,7 @@ from logs.views import LogsView
 import os
 from django.http import HttpResponse
 from django.conf import settings
+from django.contrib.auth import logout
 
 # Личный кабинет
 class CabinetView(View):
@@ -82,6 +83,11 @@ class LoginView(View):
         LogsView(request.user.username, 'Вход в систему')
         return render(request, 'login/login.html', {'form': form})
 
+class LogoutView(View):
+    def get(self, request):
+        logout(request)
+        return redirect('home')
+    
 
 # Представление для активации ключа
 class ActivateKeyView(View):   
