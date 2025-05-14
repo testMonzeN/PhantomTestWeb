@@ -1,11 +1,69 @@
 document.addEventListener('DOMContentLoaded', function() {
+    const menuToggle = document.querySelector('.mobile-menu-toggle');
+    const navigation = document.querySelector('.navigation');
+    
+    if (menuToggle && navigation) {
+        menuToggle.addEventListener('click', function(event) {
+            event.stopPropagation(); // Предотвращаем всплытие события
+            navigation.classList.toggle('mobile-active');
+            menuToggle.classList.toggle('active');
+        });
+        
+        const navLinks = document.querySelectorAll('.nav-links a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= 768) {
+                    navigation.classList.remove('mobile-active');
+                    menuToggle.classList.remove('active');
+                }
+            });
+        });
+        
+        document.addEventListener('click', function(event) {
+            const isClickInsideMenu = navigation.contains(event.target);
+            const isClickOnToggle = menuToggle.contains(event.target);
+            
+            if (!isClickInsideMenu && !isClickOnToggle && navigation.classList.contains('mobile-active')) {
+                navigation.classList.remove('mobile-active');
+                menuToggle.classList.remove('active');
+            }
+        });
+    }
+    
     const langSwitcher = document.querySelector('.lang-switcher');
     if (langSwitcher) {
+        // Toggle language menu on click
         langSwitcher.addEventListener('click', function(e) {
             e.stopPropagation();
             this.classList.toggle('open');
+            
+            // При желании здесь можно добавить создание выпадающего меню с языками
+            // Пример:
+            /* 
+            const langMenu = document.querySelector('.language-dropdown');
+            if (!langMenu) {
+                const dropdown = document.createElement('div');
+                dropdown.className = 'language-dropdown';
+                dropdown.innerHTML = `
+                    <div class="lang-option" data-lang="en">English</div>
+                    <div class="lang-option" data-lang="ru">Русский</div>
+                `;
+                this.appendChild(dropdown);
+                
+                // Обработчики языковых опций
+                dropdown.querySelectorAll('.lang-option').forEach(option => {
+                    option.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        langSwitcher.textContent = this.dataset.lang.toUpperCase();
+                        langSwitcher.classList.remove('open');
+                        // Здесь код смены языка
+                    });
+                });
+            }
+            */
         });
         
+        // Close language menu when clicking outside
         document.addEventListener('click', function() {
             langSwitcher.classList.remove('open');
         });
@@ -31,7 +89,6 @@ document.addEventListener('DOMContentLoaded', function() {
         initCarousel();
     }
 
-    // Эффекты для кнопок в форме изменения данных
     if (document.querySelector('.change-form-container')) {
         initChangeFormEffects();
     }
@@ -41,38 +98,32 @@ function initChangeFormEffects() {
     const buttons = document.querySelectorAll('.change-form-container .btn');
     
     buttons.forEach(button => {
-        // Эффект нажатия
         button.addEventListener('mousedown', function() {
             this.style.transform = 'translateY(2px)';
             this.style.boxShadow = '0 2px 5px rgba(110, 72, 170, 0.3)';
         });
         
-        // Возврат к эффекту hover после отжатия
         button.addEventListener('mouseup', function() {
             this.style.transform = '';
             this.style.boxShadow = '';
         });
         
-        // Отмена эффекта при выходе курсора за пределы кнопки
         button.addEventListener('mouseleave', function() {
             this.style.transform = '';
             this.style.boxShadow = '';
         });
     });
     
-    // Проверка изменений формы и активация кнопки сохранения
     const form = document.querySelector('.change-form-container form');
     if (form) {
         const inputs = form.querySelectorAll('input, select, textarea');
         const submitBtn = form.querySelector('button[type="submit"]');
         
-        // Сохраняем изначальные значения полей
         let initialValues = {};
         inputs.forEach(input => {
             initialValues[input.name] = input.value;
         });
         
-        // Отслеживание изменений
         inputs.forEach(input => {
             input.addEventListener('input', checkFormChanges);
         });
@@ -204,7 +255,7 @@ document.addEventListener('DOMContentLoaded', function() {
         "| Нечто большее",
         "| Скрытие читов",
         "| Welcome to Phantom",
-        "| Welcome " + (typeof currentUsername !== 'undefined' ? currentUsername : '')
+        "| Welcome " + currentUsername,
     ];
     
     let currentPhrase = 0;
@@ -251,127 +302,63 @@ document.addEventListener('DOMContentLoaded', function() {
     typeTitle();
 });
 
-/*
-// Функция для отображения уведомления о недоступности
-function showFeatureUnavailable(featureName) {
-    Swal.fire({
-        title: 'Coming soon',
-        //html: `Функция <b>${featureName}</b> временно недоступна.<br>Мы работаем над её восстановлением.`,
-        html: `This feature is coming soon`,
-        icon: 'info',
-        confirmButtonText: 'Ok',
-        
-        // Стилизация под тему сайта
-        confirmButtonColor: '#6e48aa',        // Фиолетовый основной 
-        background: '#121212',               // Темный фон
-        color: '#ffffff',                    // Белый текст
-        iconColor: '#9470d7',                // Светло-фиолетовый для иконки
-        
-        // Дополнительные настройки
-        timer: 5000,
-        timerProgressBar: true,
-        
-        // Настройка границ и теней
-        showClass: {
-            popup: 'swal2-show',
-            backdrop: 'swal2-backdrop-show',
-            icon: 'swal2-icon-show'
-        },
-        customClass: {
-            popup: 'phantom-notification',
-            title: 'phantom-notification-title',
-            confirmButton: 'phantom-btn'
-        }
-    });
-}
 
-// Добавьте стили для кастомных классов
-//document.addEventListener('DOMContentLoaded', function() {
-//    const style = document.createElement('style');
-//    document.head.appendChild(style);
-//});
-
-// При клике на кнопку или ссылку, которая ведет к недоступной функции
-document.addEventListener('DOMContentLoaded', function() {
-    const unavailableFeatures = document.querySelectorAll('.feature-unavailable');
-    
-    unavailableFeatures.forEach(element => {
-        element.addEventListener('click', function(e) {
-            e.preventDefault();
-            showFeatureUnavailable(this.dataset.featureName || 'Выбранная функция');
-        });
-    });
-});
-
-*/
-
-// Функция для отображения уведомления в правом нижнем углу
+// Уведомление
 function showComingSoonNotification(featureName) {
-    // Создаем элементы уведомления
     const notification = document.createElement('div');
-    notification.className = 'phantom-notification-toast';
+    notification.className = 'phantom-notification';
     
-    // Иконка информации
-    const infoIcon = document.createElement('div');
-    infoIcon.className = 'info-icon';
-    infoIcon.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="7" stroke="#6e48aa" stroke-width="2"/><path d="M8 4V8M8 12V12" stroke="#6e48aa" stroke-width="2" stroke-linecap="round"/></svg>';
+    notification.innerHTML = `
+        <div class="info-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <circle cx="8" cy="8" r="7.5" stroke="#6e48aa"/>
+                <text x="8" y="12" text-anchor="middle" fill="#6e48aa" style="font-size: 12px; font-weight: bold;">i</text>
+            </svg>
+        </div>
+        <div class="notification-content">
+            <div class="notification-title">Coming soon</div>
+            <div class="notification-message">This feature is coming soon</div>
+        </div>
+        <button class="notification-close">&times;</button>
+    `;
     
-    // Содержимое уведомления
-    const content = document.createElement('div');
-    content.className = 'notification-content';
-    
-    const title = document.createElement('div');
-    title.className = 'notification-title';
-    title.textContent = 'Скоро будет доступно';
-    
-    const message = document.createElement('div');
-    message.className = 'notification-message';
-    message.textContent = `Функция "${featureName}" появится в ближайшее время`;
-    
-    content.appendChild(title);
-    content.appendChild(message);
-    
-    // Кнопка закрытия
-    const closeBtn = document.createElement('button');
-    closeBtn.className = 'notification-close';
-    closeBtn.innerHTML = '&times;';
-    closeBtn.addEventListener('click', function() {
-        document.body.removeChild(notification);
-    });
-    
-    // Собираем уведомление
-    notification.appendChild(infoIcon);
-    notification.appendChild(content);
-    notification.appendChild(closeBtn);
-    
-    // Добавляем на страницу
+    // Добавляем уведомление
     document.body.appendChild(notification);
     
-    // Анимация появления
-    setTimeout(() => {
-        notification.classList.add('show');
-    }, 10);
-    
-    // Автоматическое закрытие через 5 секунд
-    setTimeout(() => {
-        notification.classList.remove('show');
+    // Закрытия
+    notification.querySelector('.notification-close').addEventListener('click', function() {
+        notification.classList.add('hiding');
         setTimeout(() => {
             if (notification.parentNode) {
                 document.body.removeChild(notification);
             }
         }, 300);
-    }, 5000);
+    });
+    
+    setTimeout(() => {
+        notification.classList.add('hiding');
+        setTimeout(() => {
+            if (notification.parentNode) {
+                document.body.removeChild(notification);
+            }
+        }, 300);
+    }, 2000);
+    
+    setTimeout(() => {
+        notification.classList.add('visible');
+    }, 10);
 }
 
-
-// Инициализация для элементов с классом .feature-coming-soon
+// Стили
 document.addEventListener('DOMContentLoaded', function() {
-    const comingSoonFeatures = document.querySelectorAll('.feature-coming-soon');
+    const style = document.createElement('style');
+    document.head.appendChild(style);
     
-    comingSoonFeatures.forEach(element => {
+    document.querySelectorAll('.feature-coming-soon').forEach(element => {
         element.addEventListener('click', function(e) {
             e.preventDefault();
-            showComingSoonNotification(this.dataset.featureName || 'Выбранная функция');
+            showComingSoonNotification();
         });
     });
 });
+

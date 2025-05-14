@@ -3,6 +3,7 @@
     --darker-bg: #0a0a0a;
     --accent-color: #6e48aa;
     --accent-light: #9d50bb;
+    --accent-dark: #5a3a8e;
     --text-color: #e0e0e0;
     --text-muted: #aaaaaa;
 }
@@ -63,6 +64,26 @@ body::before {
     margin: 20px 0;
     backdrop-filter: blur(5px);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.dark-content-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom, 
+        rgba(10, 10, 10, 0.9) 0%, 
+        rgba(10, 10, 10, 0.85) 20%, 
+        rgba(10, 10, 10, 0.9) 100%
+    );
+    backdrop-filter: blur(8px);
+    border-radius: 8px;
+    z-index: -1;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
 }
 
 .navbar {
@@ -129,6 +150,21 @@ body::before {
     color: var(--text-muted);
     font-size: 14px;
     cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.lang-switcher:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--text-color);
+}
+
+.lang-switcher.open {
+    background-color: rgba(110, 72, 170, 0.2);
+    border-color: var(--accent-color);
+    color: var(--text-color);
 }
 
 .cabinet-btn {
@@ -148,6 +184,20 @@ body::before {
 
 .main-content {
     padding: 40px 0;
+    position: relative;
+}
+
+.main-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(8px);
+    background: rgba(10, 10, 10, 0.2);
+    z-index: -1;
+    pointer-events: none;
 }
 
 .hero {
@@ -293,56 +343,341 @@ body::before {
 .social-links {
     display: flex;
     gap: 20px;
+    margin: 15px 0;
 }
 
 .social-links a {
     color: var(--text-muted);
     text-decoration: none;
-    transition: color 0.3s ease;
+    font-size: 24px;
+    transition: all 0.3s ease;
 }
 
 .social-links a:hover {
-    color: var(--accent-light);
+    color: var(--text-color);
+    transform: translateY(-2px);
 }
 
+.social-links a i {
+    transition: all 0.3s ease;
+}
+
+.social-links a:hover i.fa-telegram {
+    color: #0088cc;
+}
+
+.social-links a:hover i.fa-discord {
+    color: #7289da;
+}
+
+.social-links a:hover i.fa-vk {
+    color: #4a76a8;
+}
+
+.developer-info {
+    margin-top: 15px;
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.developer-info a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.developer-info a:hover {
+    color: var(--text-color);
+}
+
+.developer-info a i {
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.developer-info a:hover i.fa-github {
+    color: #f5f5f5;
+    transform: rotate(360deg);
+}
+
+/* Responsive design improvements based on catlavan.xyz */
+/* Mobile navigation styles */
 @media (max-width: 768px) {
     .navbar {
         width: 95%;
+        margin-top: 10px;
     }
     
     .navbar .container {
         flex-direction: column;
         align-items: flex-start;
-    }
-
-    .navbar nav {
-        flex-direction: column;
-        width: 100%;
-        margin-top: 15px;
+        padding: 10px 15px;
     }
 
     .nav-links {
         flex-direction: column;
-        gap: 10px;
-        margin-bottom: 15px;
+        gap: 15px;
+        margin-bottom: 20px;
+        width: 100%;
+        padding: 10px 0;
+    }
+
+    .nav-links li {
+        width: 100%;
+        text-align: center;
+        padding: 8px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-links li:last-child {
+        border-bottom: none;
     }
 
     .nav-right {
         width: 100%;
         justify-content: space-between;
+        padding-top: 15px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
     
     .hero h1 {
-        font-size: 36px;
+        font-size: 32px;
+    }
+    
+    .subtitle {
+        font-size: 18px;
+        padding: 0 10px;
     }
     
     .cta-buttons {
         flex-direction: column;
         align-items: center;
+        gap: 15px;
     }
     
     .features {
         grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 20px 15px;
+    }
+
+    .dark-footer .container {
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+        text-align: center;
+    }
+
+    .social-links {
+        margin: 10px 0;
+    }
+}
+
+/* Small mobile screens */
+@media (max-width: 480px) {
+    .navbar {
+        width: 98%;
+        margin-top: 5px;
+        padding: 10px 0;
+    }
+    
+    .navbar .logo {
+        font-size: 18px;
+        text-align: center;
+        width: 100%;
+        margin-right: 0;
+    }
+    
+    .hero h1 {
+        font-size: 28px;
+    }
+    
+    .subtitle {
+        font-size: 16px;
+    }
+    
+    .download-btn, .discord-btn {
+        width: 85%;
+        text-align: center;
+    }
+    
+    .feature-card {
+        padding: 15px;
+    }
+    
+    .feature-card h3 {
+        font-size: 18px;
+    }
+}
+
+/* Tablet screens */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .features {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .hero h1 {
+        font-size: 42px;
+    }
+    
+    .subtitle {
+        font-size: 19px;
+    }
+}
+
+/* Update pricing carousel for better mobile display */
+@media (max-width: 992px) {
+    .pricing-carousel {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .carousel-item {
+        min-width: 90%;
+        margin-bottom: 20px;
+    }
+    
+    .pricing-card {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+}
+
+/* Contact page responsive improvements */
+@media (max-width: 768px) {
+    .contact-form {
+        width: 95%;
+    }
+    
+    .social-buttons {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .social-btn {
+        width: 100%;
+    }
+}
+
+/* Form element responsiveness for mobile */
+@media (max-width: 768px) {
+    .form-group input,
+    .form-group textarea,
+    .submit-btn {
+        width: 100%;
+    }
+    
+    .form-group label {
+        font-size: 14px;
+    }
+}
+
+/* Cabinet page responsive improvements */
+@media (max-width: 992px) {
+    .account-panel {
+        flex-direction: column;
+    }
+    
+    .account-user-panel,
+    .account-info-panel {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .account-info-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .info-value,
+    .key-value {
+        width: 100%;
+        margin-top: 5px;
+        word-break: break-all;
+    }
+    
+    .subscription-timer {
+        flex-wrap: wrap;
+    }
+    
+    .timer-item {
+        flex: 1 0 40%;
+        margin: 5px;
+    }
+}
+
+/* Login and form improvements for mobile */
+@media (max-width: 576px) {
+    .login-content,
+    .login-form,
+    .form-group,
+    .key-activation-form {
+        width: 100%;
+        padding: 15px;
+    }
+    
+    .login-header h1 {
+        font-size: 24px;
+    }
+    
+    .login-btn,
+    .key-activation-form .btn {
+        width: 100%;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+/* License keys responsive display */
+@media (max-width: 768px) {
+    .license-key-item {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .license-key-code {
+        width: 100%;
+        font-size: 12px;
+        overflow-x: auto;
+    }
+    
+    .license-key-info {
+        width: 100%;
+    }
+    
+    .generate-key-btn {
+        width: 100%;
+    }
+}
+
+/* Improved touch targets for mobile */
+@media (max-width: 768px) {
+    .nav-links a,
+    .cabinet-btn,
+    .social-links a,
+    .form-link {
+        padding: 10px;
+    }
+    
+    .social-links a {
+        margin: 0 10px;
+    }
+    
+    /* Ensure buttons are large enough for comfortable tapping */
+    .download-btn, 
+    .discord-btn, 
+    .buy-btn, 
+    .submit-btn, 
+    .activate-btn {
+        padding: 12px 20px;
+        min-height: 44px;
     }
 }
 
@@ -1403,41 +1738,6 @@ body::before {
     animation: btnPulse 1.5s infinite;
 }
 
-
-.developer-info {
-    margin-top: 10px;
-    font-size: 0.9em;
-    text-align: center;
-}
-
-.developer-info a {
-    color: #6e48aa;
-    text-decoration: none;
-    position: relative;
-    transition: all 0.3s ease;
-}
-
-.developer-info a:hover {
-    color: #9470d7;
-}
-
-.developer-info a::after {
-    content: "";
-    position: absolute;
-    width: 0;
-    height: 2px;
-    bottom: -3px;
-    left: 0;
-    background: #6e48aa;
-    transition: all 0.3s ease;
-}
-
-.developer-info a:hover::after {
-    width: 100%;
-}
-
-
-
 .phantom-notification {
     border: 1px solid #6e48aa;
     border-radius: 10px;
@@ -1452,4 +1752,666 @@ body::before {
 }
 .swal2-timer-progress-bar {
     background: #6e48aa;
+}
+
+.phantom-notification {
+    position: fixed;
+    bottom: 20px;
+    right: -400px; 
+    background: #121212;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    width: 320px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 9999;
+    transition: right 0.3s ease;
+    border-left: 3px solid #6e48aa;
+}
+
+.phantom-notification.visible {
+    right: 20px; 
+}
+
+.phantom-notification.hiding {
+    right: -400px;
+}
+
+.info-icon {
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+.notification-content {
+    flex-grow: 1;
+}
+
+.notification-title {
+    font-weight: 600;
+    color: #9470d7;
+    margin-bottom: 2px;
+}
+
+.notification-message {
+    font-size: 14px;
+    color: #e0e0e0;
+}
+
+.notification-close {
+    background: transparent;
+    color: #6e48aa;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 10px;
+    line-height: 1;
+}
+
+.notification-close:hover {
+    color: #9470d7;
+}
+
+/* Mobile menu toggle styles */
+.mobile-menu-toggle {
+    display: none; /* Hide by default, show only on mobile */
+}
+
+@media (max-width: 768px) {
+    .mobile-menu-toggle {
+        display: flex; /* Show on mobile */
+        width: 40px;
+        height: 40px;
+        position: relative;
+        cursor: pointer;
+        z-index: 100;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-color);
+        transition: color 0.3s ease;
+    }
+    
+    .mobile-menu-toggle:hover {
+        color: var(--accent-light);
+    }
+    
+    .mobile-menu-toggle.active {
+        color: var(--accent-light);
+    }
+    
+    .mobile-menu-toggle i {
+        font-size: 24px;
+        transition: all 0.3s ease;
+    }
+    
+    .mobile-menu-toggle.active i {
+        transform: rotate(90deg);
+    }
+    
+    .navbar-top {
+        padding: 10px 0;
+    }
+}
+
+/* Mobile menu styles - when active */
+@media (max-width: 768px) {
+    .navigation.mobile-active {
+        opacity: 1;
+        max-height: 500px;
+        visibility: visible;
+        padding-top: 10px;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .navigation {
+        opacity: 0;
+        max-height: 0;
+        visibility: hidden;
+        overflow: hidden;
+        transition: all 0.3s ease-in-out;
+        width: 100%;
+    }
+    
+    .nav-links li {
+        transition: all 0.2s ease;
+        transform: translateY(-5px);
+        opacity: 0.7;
+    }
+    
+    .navigation.mobile-active .nav-links li {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    
+    .nav-links li a {
+        display: block;
+        width: 100%;
+        padding: 12px 0;
+        transition: all 0.2s ease;
+    }
+    
+    .nav-links li a:hover, 
+    .nav-links li a.active {
+        color: var(--accent-light);
+        transform: translateX(5px);
+    }
+    
+    .nav-right {
+        display: flex;
+        justify-content: center;
+        padding-top: 15px;
+        margin-top: 10px;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+}
+
+/* Fix for tablet-specific layout issues */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .navbar .container {
+        padding: 0 15px;
+    }
+    
+    .nav-links {
+        gap: 15px;
+    }
+    
+    .nav-right {
+        gap: 15px;
+    }
+}
+
+/* Navbar and mobile menu base styles */
+.navbar-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+/* Navigation styles for desktop */
+@media (min-width: 769px) {
+    .navbar .container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .navbar-top {
+        display: none; /* Скрываем контейнер navbar-top на десктопе */
+    }
+    
+    .navigation {
+        display: flex;
+        justify-content: space-between;
+        flex-grow: 1;
+        align-items: center;
+        opacity: 1;
+        visibility: visible;
+        max-height: none;
+    }
+    
+    .navbar .logo {
+        display: block; /* Показываем оригинальный логотип */
+        font-size: 20px;
+        font-weight: 600;
+        color: var(--text-color);
+        text-decoration: none;
+        margin-right: 50px;
+    }
+    
+    /* Скрываем мобильный логотип в navbar-top */
+    .navbar-top .logo {
+        display: none;
+    }
+    
+    .mobile-menu-toggle {
+        display: none;
+    }
+}
+
+/* Стили для мобильной версии */
+@media (max-width: 768px) {
+    .navbar-top {
+        display: flex;
+    }
+    
+    /* Показываем логотип в мобильной версии */
+    .navbar-top .logo {
+        display: block;
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--text-color);
+        text-decoration: none;
+    }
+    
+    /* Скрываем оригинальный логотип на мобильных */
+    .navbar .container > .logo {
+        display: none;
+    }
+}
+
+/* Стили для страниц с юридическими документами */
+.papers {
+    padding: 60px 0;
+    position: relative;
+    overflow: hidden; /* Скрываем выход эффектов за границы */
+}
+
+.papers-container {
+    display: flex;
+    gap: 40px;
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Добавляем динамическое затемнение фона для всей секции */
+.papers::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom, 
+        rgba(10, 10, 10, 0.9) 0%, 
+        rgba(10, 10, 10, 0.85) 20%, 
+        rgba(10, 10, 10, 0.9) 100%
+    );
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    z-index: 1;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.papers-sidebar {
+    width: 300px;
+    flex-shrink: 0;
+    background: rgba(20, 20, 20, 0.6);
+    padding: 25px;
+    border-radius: 8px;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(110, 72, 170, 0.1);
+    transition: all 0.3s ease;
+    height: fit-content;
+    position: sticky;
+    top: 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.papers-sidebar:hover {
+    border-color: rgba(110, 72, 170, 0.3);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.papers-sidebar h3 {
+    font-size: 22px;
+    margin-bottom: 20px;
+    background: linear-gradient(90deg, var(--accent-color), var(--accent-light));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.papers-sidebar h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-color), var(--accent-light));
+}
+
+.papers-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.papers-list li {
+    margin-bottom: 15px;
+    transition: transform 0.3s ease;
+}
+
+.papers-list li:hover {
+    transform: translateX(5px);
+}
+
+.papers-list li a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 16px;
+    transition: color 0.3s ease;
+    display: block;
+    padding: 8px 5px;
+}
+
+.papers-list li a:hover {
+    color: var(--accent-light);
+}
+
+.papers-list li.active a {
+    color: var(--accent-light);
+    font-weight: 600;
+}
+
+.papers-content {
+    flex-grow: 1;
+    background: rgba(18, 18, 18, 0.6);
+    padding: 30px;
+    border-radius: 8px;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(110, 72, 170, 0.1);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    position: relative; /* Для псевдоэлементов */
+}
+
+/* Добавляем градиентное затемнение между секциями */
+.papers-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        rgba(18, 18, 18, 0.4) 0%,
+        rgba(18, 18, 18, 0) 5%,
+        rgba(18, 18, 18, 0) 95%,
+        rgba(18, 18, 18, 0.4) 100%
+    );
+    pointer-events: none; /* Чтобы не мешало взаимодействию */
+    z-index: 1;
+    border-radius: 8px;
+}
+
+.papers-content > * {
+    position: relative;
+    z-index: 2; /* Поверх градиента */
+}
+
+.papers-content h1 {
+    font-size: 32px;
+    margin-bottom: 30px;
+    background: linear-gradient(90deg, var(--accent-color), var(--accent-light));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.papers-content h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-color), var(--accent-light));
+}
+
+.papers-content h2 {
+    font-size: 24px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    color: var(--accent-light);
+    position: relative;
+    padding-bottom: 8px;
+    scroll-margin-top: 70px; /* Для плавной прокрутки */
+    padding-top: 10px;
+    margin-top: 50px; /* Увеличиваем отступ для визуального разделения */
+}
+
+.papers-content h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-color), var(--accent-light));
+    opacity: 0.7;
+}
+
+/* Добавляем разделительную линию между секциями */
+.papers-content h2:not(:first-of-type)::before {
+    content: '';
+    position: absolute;
+    top: -25px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(
+        to right,
+        rgba(110, 72, 170, 0.3),
+        rgba(110, 72, 170, 0.1) 50%,
+        rgba(110, 72, 170, 0) 100%
+    );
+}
+
+.papers-content h2:first-of-type {
+    margin-top: 10px; /* Меньше отступ для первого заголовка */
+}
+
+.papers-content h3 {
+    font-size: 20px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    color: var(--accent-light);
+    scroll-margin-top: 70px; /* Для плавной прокрутки */
+}
+
+.papers-content p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    color: var(--text-color);
+    transition: all 0.3s ease; /* Плавное появление при прокрутке */
+}
+
+.papers-content ul {
+    margin-bottom: 20px;
+    padding-left: 20px;
+}
+
+.papers-content ul li {
+    margin-bottom: 10px;
+    line-height: 1.6;
+    color: var(--text-color);
+    position: relative;
+    padding-left: 5px;
+    transition: all 0.3s ease; /* Плавное появление при прокрутке */
+}
+
+.papers-content ul li::before {
+    content: '•';
+    color: var(--accent-light);
+    position: absolute;
+    left: -15px;
+}
+
+/* Добавим эффект затемнения для разделов при прокрутке */
+.papers-content h2, 
+.papers-content h3 {
+    transition: all 0.3s ease;
+}
+
+.papers-content h2:target, 
+.papers-content h3:target {
+    background-color: rgba(110, 72, 170, 0.1);
+    padding: 10px;
+    border-radius: 4px;
+    transform: translateX(5px);
+}
+
+/* Улучшаем отображение маркеров списка */
+.papers-content ul li {
+    padding-left: 10px;
+}
+
+/* Добавляем плавную прокрутку */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Адаптивные стили для страниц с юридическими документами */
+@media (max-width: 992px) {
+    .papers-container {
+        flex-direction: column;
+    }
+    
+    .papers-sidebar {
+        width: 100%;
+        margin-bottom: 40px;
+        position: static;
+        top: 0;
+    }
+    
+    .papers-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    
+    .papers-list li {
+        margin-bottom: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .papers {
+        padding: 40px 0;
+    }
+    
+    .papers-content {
+        padding: 20px;
+    }
+    
+    .papers-content h1 {
+        font-size: 28px;
+    }
+    
+    .papers-content h2 {
+        font-size: 22px;
+    }
+    
+    .papers-content h3 {
+        font-size: 18px;
+    }
+    
+    .papers-list {
+        flex-direction: column;
+    }
+    
+    .papers-list li {
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .papers {
+        padding: 30px 0;
+    }
+    
+    .papers-content {
+        padding: 15px;
+    }
+    
+    .papers-content h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+    
+    .papers-content h2 {
+        font-size: 20px;
+        margin-top: 30px;
+    }
+    
+    .papers-content h3 {
+        font-size: 16px;
+    }
+}
+
+/* Добавляем навигационное меню для быстрого перехода к разделам */
+.papers-nav {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(18, 18, 18, 0.8);
+    border-radius: 20px;
+    padding: 15px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(110, 72, 170, 0.2);
+    z-index: 99;
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+}
+
+.papers-nav:hover {
+    opacity: 1;
+}
+
+.papers-nav a {
+    display: block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.papers-nav a:hover {
+    background: var(--accent-light);
+    transform: scale(1.2);
+}
+
+.papers-nav a.active {
+    background: var(--accent-light);
+}
+
+.papers-nav a::before {
+    content: attr(data-title);
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(10, 10, 10, 0.8);
+    color: var(--text-color);
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    transform: translateY(-50%) translateX(10px);
+    pointer-events: none;
+}
+
+.papers-nav a:hover::before {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+}
+
+/* Скрываем навигационное меню на мобильных устройствах */
+@media (max-width: 992px) {
+    .papers-nav {
+        display: none;
+    }
 }

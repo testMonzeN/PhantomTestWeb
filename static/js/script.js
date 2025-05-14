@@ -1,11 +1,69 @@
 document.addEventListener('DOMContentLoaded', function() {
+    const menuToggle = document.querySelector('.mobile-menu-toggle');
+    const navigation = document.querySelector('.navigation');
+    
+    if (menuToggle && navigation) {
+        menuToggle.addEventListener('click', function(event) {
+            event.stopPropagation(); // Предотвращаем всплытие события
+            navigation.classList.toggle('mobile-active');
+            menuToggle.classList.toggle('active');
+        });
+        
+        const navLinks = document.querySelectorAll('.nav-links a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= 768) {
+                    navigation.classList.remove('mobile-active');
+                    menuToggle.classList.remove('active');
+                }
+            });
+        });
+        
+        document.addEventListener('click', function(event) {
+            const isClickInsideMenu = navigation.contains(event.target);
+            const isClickOnToggle = menuToggle.contains(event.target);
+            
+            if (!isClickInsideMenu && !isClickOnToggle && navigation.classList.contains('mobile-active')) {
+                navigation.classList.remove('mobile-active');
+                menuToggle.classList.remove('active');
+            }
+        });
+    }
+    
     const langSwitcher = document.querySelector('.lang-switcher');
     if (langSwitcher) {
+        // Toggle language menu on click
         langSwitcher.addEventListener('click', function(e) {
             e.stopPropagation();
             this.classList.toggle('open');
+            
+            // При желании здесь можно добавить создание выпадающего меню с языками
+            // Пример:
+            /* 
+            const langMenu = document.querySelector('.language-dropdown');
+            if (!langMenu) {
+                const dropdown = document.createElement('div');
+                dropdown.className = 'language-dropdown';
+                dropdown.innerHTML = `
+                    <div class="lang-option" data-lang="en">English</div>
+                    <div class="lang-option" data-lang="ru">Русский</div>
+                `;
+                this.appendChild(dropdown);
+                
+                // Обработчики языковых опций
+                dropdown.querySelectorAll('.lang-option').forEach(option => {
+                    option.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        langSwitcher.textContent = this.dataset.lang.toUpperCase();
+                        langSwitcher.classList.remove('open');
+                        // Здесь код смены языка
+                    });
+                });
+            }
+            */
         });
         
+        // Close language menu when clicking outside
         document.addEventListener('click', function() {
             langSwitcher.classList.remove('open');
         });
@@ -31,7 +89,6 @@ document.addEventListener('DOMContentLoaded', function() {
         initCarousel();
     }
 
-    // Эффекты для кнопок в форме изменения данных
     if (document.querySelector('.change-form-container')) {
         initChangeFormEffects();
     }
@@ -41,38 +98,32 @@ function initChangeFormEffects() {
     const buttons = document.querySelectorAll('.change-form-container .btn');
     
     buttons.forEach(button => {
-        // Эффект нажатия
         button.addEventListener('mousedown', function() {
             this.style.transform = 'translateY(2px)';
             this.style.boxShadow = '0 2px 5px rgba(110, 72, 170, 0.3)';
         });
         
-        // Возврат к эффекту hover после отжатия
         button.addEventListener('mouseup', function() {
             this.style.transform = '';
             this.style.boxShadow = '';
         });
         
-        // Отмена эффекта при выходе курсора за пределы кнопки
         button.addEventListener('mouseleave', function() {
             this.style.transform = '';
             this.style.boxShadow = '';
         });
     });
     
-    // Проверка изменений формы и активация кнопки сохранения
     const form = document.querySelector('.change-form-container form');
     if (form) {
         const inputs = form.querySelectorAll('input, select, textarea');
         const submitBtn = form.querySelector('button[type="submit"]');
         
-        // Сохраняем изначальные значения полей
         let initialValues = {};
         inputs.forEach(input => {
             initialValues[input.name] = input.value;
         });
         
-        // Отслеживание изменений
         inputs.forEach(input => {
             input.addEventListener('input', checkFormChanges);
         });

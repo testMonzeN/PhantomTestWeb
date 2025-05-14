@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <title>Phantom</title>
     <link rel="icon" href="{% static 'img/phantom-final-logo.svg' %}" type="image/svg+xml">
@@ -20,10 +20,22 @@
     <div class="content-wrapper">
         <header class="navbar">
             <div class="container">
+                <!-- Структура для мобильных устройств -->
+                <div class="navbar-top">
+                    <a class="logo">
+                        <img>Phantom</img>
+                    </a>
+                    <div class="mobile-menu-toggle">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                </div>
+                
+                <!-- Оригинальная структура для десктопа -->
                 <a class="logo">
                     <img>Phantom</img>
                 </a>
-                <nav>
+                
+                <nav class="navigation">
                     <ul class="nav-links">
                         <li><a href="{% url 'home' %}" {% if request.path == '/' %}class="active"{% endif %}>Home</a></li>
                         <li><a href="{% url 'features' %}" {% if request.path == '/features/' %}class="active"{% endif %}>Features</a></li>
