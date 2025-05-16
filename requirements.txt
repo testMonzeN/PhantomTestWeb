@@ -6,3 +6,4 @@ django-allauth
 django-widget-tweaks
 django-ratelimit
 django-rest-framework
+qrcode

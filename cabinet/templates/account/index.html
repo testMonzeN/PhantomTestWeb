@@ -25,7 +25,7 @@
                         <a href="{% url 'download_launcher' %}" class="account-action-btn">
                             <i class="fas fa-download"></i> Download client
                         </a>
-                        <a class="account-action-btn feature-coming-soon" data-feature-name="2FA Authenticator">
+                        <a href="#" class="account-action-btn feature-coming-soon">
                             <i class="fas fa-shield-alt"></i> 2FA Authenticator
                         </a>
                         <a href="{% url 'change' %}" class="account-action-btn">
@@ -34,6 +34,7 @@
                         <a href="https://discord.gg/phantomdlc" class="account-action-btn" target="_blank">
                             <i class="fab fa-discord"></i> Discord server
                         </a>
+
                         <a href="{% url 'logout' %}" class="account-action-btn logout-btn">
                             <i class="fas fa-sign-out-alt"></i> Sign out
                         </a>
@@ -86,7 +87,7 @@
                             {{ user.email }}
                         </div>
                     </div>
-                    
+                                        
                     <div class="account-info-item">
                         <div class="info-label">
                             <i class="fas fa-lock"></i> Two-factor authentication
@@ -95,6 +96,7 @@
                             {% if user.is_2fa_enabled %}Enabled{% else %}Disabled{% endif %}
                         </div>
                     </div>
+
                     
                     <!-- Таймер подписки -->
                     <div class="subscription-info">

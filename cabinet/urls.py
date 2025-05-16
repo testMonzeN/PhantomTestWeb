@@ -1,5 +1,9 @@
 from django.urls import path
-from .views import CabinetView, RegisterView, LoginView, UserChangeView, ActivateKeyView, DownloadLauncherView, LogoutView
+from .views import (
+    CabinetView, RegisterView, LoginView, 
+    UserChangeView, ActivateKeyView, DownloadLauncherView, 
+    LogoutView
+)
 
 
 
@@ -14,6 +18,5 @@ urlpatterns = [
     
     path('download-launcher/', DownloadLauncherView.as_view(), name='download_launcher'),
     path('activate-key/', ActivateKeyView.as_view(), name='activate_key'),
-
 ]
     

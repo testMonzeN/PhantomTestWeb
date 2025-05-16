@@ -531,19 +531,68 @@ body::before {
 
 /* Update pricing carousel for better mobile display */
 @media (max-width: 992px) {
+    .carousel-container {
+        overflow: visible;
+        margin: 30px 0;
+    }
+    
     .pricing-carousel {
-        flex-direction: column;
-        align-items: center;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        margin: 0 -15px;
+        padding: 0 15px 20px;
+        gap: 15px;
+        align-items: stretch;
+        transform: none !important;
     }
     
     .carousel-item {
-        min-width: 90%;
-        margin-bottom: 20px;
+        min-width: 280px;
+        max-width: 80%;
+        flex: 0 0 auto;
+        margin-bottom: 5px;
+        scroll-snap-align: start;
     }
     
     .pricing-card {
-        max-width: 400px;
-        margin: 0 auto;
+        height: 100%;
+    }
+    
+    .carousel-controls {
+        display: none;
+    }
+    
+    .carousel-dots {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .carousel-item {
+        min-width: 250px;
+    }
+    
+    .pricing-card {
+        padding: 20px 15px;
+    }
+    
+    .pricing-card h3 {
+        font-size: 20px;
+    }
+    
+    .features-list li {
+        font-size: 14px;
+        padding: 6px 0;
+        padding-left: 25px;
+    }
+    
+    .buy-btn {
+        padding: 10px 16px;
     }
 }
 
@@ -686,6 +735,7 @@ body::before {
     text-align: center;
 }
 
+/* Pricing section styles */
 .carousel-container {
     margin: 40px 0;
     position: relative;
@@ -845,18 +895,22 @@ body::before {
 
 @media (max-width: 992px) {
     .pricing-carousel {
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        scroll-behavior: smooth;
-        -webkit-overflow-scrolling: touch;
-        padding-bottom: 20px;
+        flex-direction: column;
+        align-items: center;
     }
     
     .carousel-item {
-        scroll-snap-align: center;
+        min-width: 90%;
+        margin-bottom: 20px;
+    }
+    
+    .pricing-card {
+        max-width: 400px;
+        margin: 0 auto;
     }
 }
 
+/* Contact page styles */
 .contact-info {
     text-align: center;
     margin-bottom: 30px;
@@ -1011,6 +1065,7 @@ body::before {
     box-shadow: 0 10px 20px rgba(110, 72, 170, 0.4);
 }
 
+/* Contact page responsive improvements */
 @media (max-width: 768px) {
     .contact-form {
         grid-template-columns: 1fr;
