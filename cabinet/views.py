@@ -16,7 +16,7 @@ from django.contrib.auth import logout
 
 # Личный кабинет
 class CabinetView(View):
-   def get(self, request):
+    def get(self, request):
         user = request.user
         subscription_time = user.get_subscription_time_left()
         
@@ -27,11 +27,22 @@ class CabinetView(View):
         for message in storage:
             key_activation_message = message.message
             key_activation_success = message.level == messages.SUCCESS
-            storage.used = False
             break
+    
+        if not user.is_subscribed and user.role_user.name != 'Developer':
+            user.role_user.name = 'Default'
+            user.save()
         
+        if user.role_user.name == 'Developer':
+            status_user = 'DEVELOPER'
+        elif user.is_subscribed:
+            status_user = 'PREMIUM USER'
+        else:
+            status_user = 'DEFAULT USER'
+            
         return render(request, 'account/index.html', {
             'user': user, 
+            'status_user': status_user,
             'subscription_time': subscription_time,
             'key_activation_message': key_activation_message,
             'key_activation_success': key_activation_success
@@ -92,6 +103,7 @@ class LogoutView(View):
 # Представление для активации ключа
 class ActivateKeyView(View):   
     def post(self, request):
+        user = request.user
         key_value = request.POST.get('license_key')
         
         if not key_value:
@@ -121,22 +133,20 @@ class ActivateKeyView(View):
             
             user.save()
             
-
             license_key.is_used = True
             license_key.used_by = user
             license_key.used_at = timezone.now()
             license_key.save()
             
             messages.success(request, f'Ключ успешно активирован! Добавлено {license_key.duration_days} дней подписки.')
-            
+            LogsView(user, f'Ключ {key_value} успешно активирован! Добавлено {license_key.duration_days} дней подписки')    
+
         except LicenseKey.DoesNotExist:
             messages.error(request, 'Недействительный или уже использованный ключ')
-        
-        LogsView(user, f'Ключ {key_value} успешно активирован! Добавлено {license_key.duration_days} дней подписки.')
+               
         return redirect('cabinet')
 
-
-# Изменение пароля пользователя
+# Изменение пароля пользователя (если не зарегистрирован, то нельзя)
 class UserChangeView(View):   
     def get(self, request):
         form = CustomUserChangeForm(user=request.user)
@@ -148,8 +158,8 @@ class UserChangeView(View):
             form.save()
             messages.success(request, 'Пароль успешно изменен')
             LogsView(request.user, 'Пароль успешно изменен')
-            return redirect('cabinet')
         return render(request, 'account/change.html', {'form': form})
+
 
 
 class DownloadLauncherView(View):
@@ -164,12 +174,6 @@ class DownloadLauncherView(View):
                 return response
 
 
-# views.py
-def some_view(request):
-    context = {
-        'feature_status': {
-            'feature_name': 'Отправка приглашений',
-            'is_available': False  # или проверка из настроек/базы данных
-        }
-    }
-    return render(request, 'template.html', context)
+
+
+

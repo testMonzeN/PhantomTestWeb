@@ -39,7 +39,7 @@ class CustomLoginForm(forms.Form):
         return cleaned_data
 
 
-# Форма смены пароля
+# Форма смены пароля зарегестрированного пользователя
 class CustomUserChangeForm(PasswordChangeForm):
     old_password = forms.CharField(
         label="Текущий пароль",
@@ -55,3 +55,7 @@ class CustomUserChangeForm(PasswordChangeForm):
     )
 
 
+
+    
+    
+    

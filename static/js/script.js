@@ -523,3 +523,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // Вызываем функцию при загрузке страницы
     onScroll();
 });
+
+// Удаление сообщения активации ключа
+document.addEventListener('DOMContentLoaded', function() {
+    const activationMessage = document.querySelector('.activation-message');
+    if (activationMessage) {
+        setTimeout(function() {
+            activationMessage.style.opacity = '0';
+            setTimeout(function() {
+                activationMessage.remove();
+            }, 300);
+        }, 2000);
+    }
+});

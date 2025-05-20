@@ -303,7 +303,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-// Уведомление
+// Уведомление info
 function showComingSoonNotification(featureName) {
     const notification = document.createElement('div');
     notification.className = 'phantom-notification';
@@ -362,3 +362,164 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+
+
+
+// Уведомление error
+function showErrorNotification(message) {
+    const notification = document.createElement('div');
+    notification.className = 'phantom-notification';
+    
+    notification.innerHTML = `
+        <div class="error-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <circle cx="8" cy="8" r="7.5" stroke="#6e48aa"/>
+                <text x="8" y="12" text-anchor="middle" fill="#6e48aa" style="font-size: 12px; font-weight: bold;">i</text>
+            </svg>
+        </div>
+        <div class="notification-content">
+            <div class="notification-title">Attempt failed</div>
+            <div class="notification-message">${message}</div>
+        </div>
+        <button class="notification-close">&times;</button>
+    `;
+    
+    // Добавляем уведомление
+    document.body.appendChild(notification);
+    
+    // Закрытия
+    notification.querySelector('.notification-close').addEventListener('click', function() {
+        notification.classList.add('hiding');
+        setTimeout(() => {
+            if (notification.parentNode) {
+                document.body.removeChild(notification);
+            }
+        }, 300);
+    });
+    
+    setTimeout(() => {
+        notification.classList.add('hiding');
+        setTimeout(() => {
+            if (notification.parentNode) {
+                document.body.removeChild(notification);
+            }
+        }, 300);
+    }, 2000);
+    
+    setTimeout(() => {
+        notification.classList.add('visible');
+    }, 10);
+}
+
+// Стили
+document.addEventListener('DOMContentLoaded', function() {
+    const style = document.createElement('style');
+    document.head.appendChild(style);
+    
+    document.querySelectorAll('.error-notification').forEach(element => {
+        element.addEventListener('click', function(e) {
+            e.preventDefault();
+            showErrorNotification();
+        });
+    });
+});
+
+
+
+// Уведомление success
+function showSuccessNotification(message) {
+    const notification = document.createElement('div');
+    notification.className = 'phantom-notification';
+    
+    notification.innerHTML = `
+        <div class="success-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <circle cx="8" cy="8" r="7.5" stroke="#6e48aa"/>
+                <text x="8" y="12" text-anchor="middle" fill="#6e48aa" style="font-size: 12px; font-weight: bold;">i</text>
+            </svg>
+        </div>
+        <div class="notification-content">
+            <div class="notification-title">Success</div>
+            <div class="notification-message">${message}</div>
+        </div>
+        <button class="notification-close">&times;</button>
+    `;
+    
+    // Добавляем уведомление
+    document.body.appendChild(notification);
+    
+    // Закрытия
+    notification.querySelector('.notification-close').addEventListener('click', function() {
+        notification.classList.add('hiding');
+        setTimeout(() => {
+            if (notification.parentNode) {
+                document.body.removeChild(notification);
+            }
+        }, 300);
+    });
+    
+    setTimeout(() => {
+        notification.classList.add('hiding');
+        setTimeout(() => {
+            if (notification.parentNode) {
+                document.body.removeChild(notification);
+            }
+        }, 300);
+    }, 2000);
+    
+    setTimeout(() => {
+        notification.classList.add('visible');
+    }, 10);
+}
+
+// Стили
+document.addEventListener('DOMContentLoaded', function() {
+    const style = document.createElement('style');
+    document.head.appendChild(style);
+    
+    document.querySelectorAll('.success-notification').forEach(element => {
+        element.addEventListener('click', function(e) {
+            e.preventDefault();
+            showSuccessNotification();
+        });
+    });
+});
+
+
+
+// Скрипт для отслеживания активного раздела при прокрутке
+document.addEventListener('DOMContentLoaded', function() {
+    // Получаем все заголовки разделов
+    const sections = document.querySelectorAll('.papers-content h2');
+    const navLinks = document.querySelectorAll('.papers-nav a');
+    
+    // Функция для определения активного раздела при прокрутке
+    function onScroll() {
+        const scrollPosition = window.scrollY;
+        
+        // Проверяем положение каждого раздела
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - 100;
+            const sectionId = section.getAttribute('id');
+            
+            if (scrollPosition >= sectionTop) {
+                // Удаляем класс active у всех ссылок
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                });
+                
+                // Добавляем класс active к текущей активной ссылке
+                const activeLink = document.querySelector(`.papers-nav a[href="#${sectionId}"]`);
+                if (activeLink) {
+                    activeLink.classList.add('active');
+                }
+            }
+        });
+    }
+    
+    // Слушаем событие прокрутки
+    window.addEventListener('scroll', onScroll);
+    
+    // Вызываем функцию при загрузке страницы
+    onScroll();
+});

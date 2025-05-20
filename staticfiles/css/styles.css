@@ -531,40 +531,50 @@ body::before {
 
 /* Update pricing carousel for better mobile display */
 @media (max-width: 992px) {
+    .carousel-container {
+        overflow: visible;
+        margin: 30px 0;
+    }
+    
     .pricing-carousel {
         display: flex;
         flex-direction: row;
+        flex-wrap: nowrap;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
         scroll-behavior: smooth;
         -webkit-overflow-scrolling: touch;
-        padding-bottom: 20px;
+        margin: 0 -15px;
+        padding: 0 15px 20px;
         gap: 15px;
         align-items: stretch;
-        width: 100%;
+        transform: none !important;
     }
     
     .carousel-item {
-        scroll-snap-align: center;
         min-width: 280px;
-        max-width: 85%;
+        max-width: 80%;
         flex: 0 0 auto;
+        margin-bottom: 5px;
+        scroll-snap-align: start;
     }
     
     .pricing-card {
         height: 100%;
-        margin: 0;
+    }
+    
+    .carousel-controls {
+        display: none;
+    }
+    
+    .carousel-dots {
+        display: none;
     }
 }
 
 @media (max-width: 480px) {
-    .pricing-carousel {
-        padding: 0 10px 20px;
-    }
-    
     .carousel-item {
-        min-width: 260px;
-        max-width: 90%;
+        min-width: 250px;
     }
     
     .pricing-card {
@@ -577,6 +587,8 @@ body::before {
     
     .features-list li {
         font-size: 14px;
+        padding: 6px 0;
+        padding-left: 25px;
     }
     
     .buy-btn {
@@ -723,6 +735,7 @@ body::before {
     text-align: center;
 }
 
+/* Pricing section styles */
 .carousel-container {
     margin: 40px 0;
     position: relative;
@@ -731,12 +744,8 @@ body::before {
 
 .pricing-carousel {
     display: flex;
-    flex-direction: row;
     transition: transform 0.5s ease;
     gap: 20px;
-    width: 100%;
-    justify-content: center;
-    flex-wrap: nowrap;
 }
 
 .carousel-item {
@@ -886,18 +895,22 @@ body::before {
 
 @media (max-width: 992px) {
     .pricing-carousel {
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        scroll-behavior: smooth;
-        -webkit-overflow-scrolling: touch;
-        padding-bottom: 20px;
+        flex-direction: column;
+        align-items: center;
     }
     
     .carousel-item {
-        scroll-snap-align: center;
+        min-width: 90%;
+        margin-bottom: 20px;
+    }
+    
+    .pricing-card {
+        max-width: 400px;
+        margin: 0 auto;
     }
 }
 
+/* Contact page styles */
 .contact-info {
     text-align: center;
     margin-bottom: 30px;
@@ -1052,6 +1065,7 @@ body::before {
     box-shadow: 0 10px 20px rgba(110, 72, 170, 0.4);
 }
 
+/* Contact page responsive improvements */
 @media (max-width: 768px) {
     .contact-form {
         grid-template-columns: 1fr;
@@ -1485,22 +1499,24 @@ body::before {
 }
 
 .activation-message {
+    transition: opacity 0.3s ease;
+    opacity: 1;
     padding: 10px;
-    margin: 10px 0;
     border-radius: 4px;
-    font-weight: 500;
-}
-
-.activation-message.success {
-    background-color: rgba(0, 180, 0, 0.2);
-    border: 1px solid rgba(0, 180, 0, 0.5);
-    color: #5cff5c;
+    margin-top: 10px;
+    text-align: center;
 }
 
 .activation-message.error {
-    background-color: rgba(180, 0, 0, 0.2);
-    border: 1px solid rgba(180, 0, 0, 0.5);
-    color: #ff5c5c;
+    background-color: rgba(220, 53, 69, 0.2);
+    border: 1px solid rgba(220, 53, 69, 0.5);
+    color: #dc3545;
+}
+
+.activation-message.success {
+    background-color: rgba(40, 167, 69, 0.2);
+    border: 1px solid rgba(40, 167, 69, 0.5);
+    color: #28a745;
 }
 
 @media (max-width: 768px) {

@@ -1499,22 +1499,24 @@ body::before {
 }
 
 .activation-message {
+    transition: opacity 0.3s ease;
+    opacity: 1;
     padding: 10px;
-    margin: 10px 0;
     border-radius: 4px;
-    font-weight: 500;
-}
-
-.activation-message.success {
-    background-color: rgba(0, 180, 0, 0.2);
-    border: 1px solid rgba(0, 180, 0, 0.5);
-    color: #5cff5c;
+    margin-top: 10px;
+    text-align: center;
 }
 
 .activation-message.error {
-    background-color: rgba(180, 0, 0, 0.2);
-    border: 1px solid rgba(180, 0, 0, 0.5);
-    color: #ff5c5c;
+    background-color: rgba(220, 53, 69, 0.2);
+    border: 1px solid rgba(220, 53, 69, 0.5);
+    color: #dc3545;
+}
+
+.activation-message.success {
+    background-color: rgba(40, 167, 69, 0.2);
+    border: 1px solid rgba(40, 167, 69, 0.5);
+    color: #28a745;
 }
 
 @media (max-width: 768px) {
