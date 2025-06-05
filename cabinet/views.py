@@ -4,7 +4,7 @@ from django.contrib.auth import login
 from .forms import CustomUserRegisterForm, CustomLoginForm, CustomUserChangeForm
 from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import check_password
-from .models import User, LicenseKey
+from .models import User, LicenseKey, Role
 from django.utils import timezone
 import datetime
 from django.contrib import messages
@@ -13,6 +13,11 @@ import os
 from django.http import HttpResponse
 from django.conf import settings
 from django.contrib.auth import logout
+
+import pyotp
+import qrcode
+import io
+import base64
 
 # Личный кабинет
 class CabinetView(View):
@@ -29,11 +34,11 @@ class CabinetView(View):
             key_activation_success = message.level == messages.SUCCESS
             break
     
-        if not user.is_subscribed and user.role_user.name != 'Developer':
-            user.role_user.name = 'Default'
+        if not user.is_subscribed and user.get_role() != 'Developer':
+            user.role_user = Role.objects.get(name='Default')
             user.save()
         
-        if user.role_user.name == 'Developer':
+        if user.get_role() == 'Developer':
             status_user = 'DEVELOPER'
         elif user.is_subscribed:
             status_user = 'PREMIUM USER'
@@ -42,6 +47,7 @@ class CabinetView(View):
             
         return render(request, 'account/index.html', {
             'user': user, 
+            'mfa_enabled': user.mfa_enabled, 
             'status_user': status_user,
             'subscription_time': subscription_time,
             'key_activation_message': key_activation_message,
@@ -74,18 +80,30 @@ class LoginView(View):
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-            
+            otpcode = form.cleaned_data['otpcode']
+
+
             user = authenticate(username=username, password=password)
-            
+            totp = pyotp.TOTP(user.otp_secret)
             if user is not None:
-                login(request, user)
-                return redirect('cabinet')
+                if user.mfa_enabled:
+                    if totp.verify(otpcode): 
+                        login(request, user)
+                        return redirect('cabinet')
+                else:
+                    login(request, user)
+                    return redirect('cabinet')
             else:
                 try:
                     user = User.objects.get(username=username)
                     if check_password(password, user.password):
-                        login(request, user)
-                        return redirect('cabinet')
+                        if user.mfa_enabled:
+                            if totp.verify(otpcode):
+                                login(request, user)
+                                return redirect('cabinet')
+                        else:
+                            login(request, user)
+                            return redirect('cabinet')
                 except User.DoesNotExist:
                     pass
                 
@@ -163,17 +181,76 @@ class UserChangeView(View):
 
 
 class DownloadLauncherView(View):
+    def check(self, request):
+        user = request.user    
+        if user.role_user.name == 'Developer':
+            return True
+        
+        if user.is_subscribed:
+            return True
+        
+        return False
+
+
     def get(self, request):
-        file_path = os.path.join(settings.BASE_DIR, 'YOUR_FILE.txt') # YOUR_FILE.txt - изменить на будуший лаунчер 
-        file_name = 'launcher.txt' # launcher.txt -> phantom.exr 
+        if not self.check(request=request):
+            return redirect('cabinet')
+        else:
+            file_path = os.path.join(settings.BASE_DIR, 'YOUR_FILE.txt')    # YOUR_FILE.txt - изменить на будуший лаунчер 
+            file_name = 'launcher.txt'                                      # launcher.txt -> phantom.exr 
 
-        if os.path.exists(file_path):
-            with open(file_path, 'rb') as fh:
-                response = HttpResponse(fh.read(), content_type="application/vnd.ms-exe")
-                response['Content-Disposition'] = f'inline; filename={file_name}'
-                return response
+            if os.path.exists(file_path):
+                with open(file_path, 'rb') as fh:
+                    response = HttpResponse(fh.read(), content_type="application/vnd.ms-exe")
+                    response['Content-Disposition'] = f'inline; filename={file_name}'
+                    return response
 
 
 
 
+class Authentication(View):
+    def get(self, request):
+        user = request.user
 
+        if not user.otp_secret:
+            user.otp_secret = pyotp.random_base32()
+            user.save()
+
+        opt_url = pyotp.totp.TOTP(user.otp_secret).provisioning_uri(
+            name = user.username,
+            issuer_name='Phantom'
+        )
+
+        qr = qrcode.make(opt_url)
+        buffer = io.BytesIO()
+        qr.save(buffer, format='PNG')
+
+        buffer.seek(0)
+        qr_code = base64.b64encode(buffer.getvalue()).decode('utf-8')
+
+        qr_code_data_url = f'data:image/png;base64,{qr_code}'
+
+        return render(request, '2-fa/auth.html', {
+            'qr_code': qr_code_data_url,
+            'user': user
+        })
+
+    def post(self, request):
+        user = request.user
+        otp_code = request.POST.get('otp_code')
+        
+        if not otp_code:
+            messages.error(request, 'Пожалуйста, введите код')
+            return redirect('authentication')
+            
+        totp = pyotp.TOTP(user.otp_secret)
+        
+        if totp.verify(otp_code):
+            user.mfa_enabled = True
+            user.save()
+            messages.success(request, 'Двухфакторная аутентификация успешно настроена!')
+            LogsView(user, 'Двухфакторная аутентификация успешно настроена')
+            return redirect('cabinet')
+        else:
+            messages.error(request, 'Неверный код. Пожалуйста, попробуйте снова.')
+            return redirect('authentication')

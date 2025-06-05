@@ -15,15 +15,27 @@
                     <div class="user-status">{{ status_user }}</div>
                     <div class="user-name">{{ user.username }} <span class="user-id">uid {{ user.id }}</span></div>
                     
-                
-                    
                     <div class="account-actions">
-                        <a href="{% url 'download_launcher' %}" class="account-action-btn">
-                            <i class="fas fa-download"></i> Download client
-                        </a>
-                        <a href="#" class="account-action-btn feature-coming-soon">
-                            <i class="fas fa-shield-alt"></i> 2FA Authenticator
-                        </a>
+                        {% if request.user.is_subscribed %}
+                            <a href="{% url 'download_launcher' %}" class="account-action-btn">
+                                <i class="fas fa-download"></i> Download client
+                            </a>
+                        {% else %}
+                            <a href="{% url 'cabinet' %}" class="account-action-btn feature-coming-soon" message="У вас нету подписки для установки лаунчера">
+                                <i class="fas fa-download"></i> Download client
+                            </a>
+                        {% endif %}
+
+
+                        {% if not mfa_enabled %}
+                            <a href="{% url 'authentication' %}" class="account-action-btn">
+                                <i class="fas fa-shield-alt"></i> 2FA Authenticator
+                            </a>
+                        {% else %}
+                            <a href="{% url 'cabinet' %}" class="account-action-btn feature-coming-soon" message="2FA Authenticator уже включен" id="2fa-enabled">
+                                <i class="fas fa-shield-alt"></i> 2FA Authenticator
+                            </a>
+                        {% endif %}
                         <a href="{% url 'change' %}" class="account-action-btn">
                             <i class="fas fa-key"></i> Reset password
                         </a>

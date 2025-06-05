@@ -37,9 +37,8 @@ document.addEventListener('DOMContentLoaded', function() {
             e.stopPropagation();
             this.classList.toggle('open');
             
-            // При желании здесь можно добавить создание выпадающего меню с языками
-            // Пример:
-            /* 
+            // Выпадающее меню с языками
+            /*
             const langMenu = document.querySelector('.language-dropdown');
             if (!langMenu) {
                 const dropdown = document.createElement('div');
@@ -50,13 +49,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 `;
                 this.appendChild(dropdown);
                 
-                // Обработчики языковых опций
                 dropdown.querySelectorAll('.lang-option').forEach(option => {
                     option.addEventListener('click', function(e) {
                         e.stopPropagation();
                         langSwitcher.textContent = this.dataset.lang.toUpperCase();
                         langSwitcher.classList.remove('open');
-                        // Здесь код смены языка
+                        // Код смены языка
                     });
                 });
             }
@@ -304,7 +302,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 // Уведомление info
-function showComingSoonNotification(featureName) {
+function showComingSoonNotification(message) {
     const notification = document.createElement('div');
     notification.className = 'phantom-notification';
     
@@ -317,7 +315,7 @@ function showComingSoonNotification(featureName) {
         </div>
         <div class="notification-content">
             <div class="notification-title">Coming soon</div>
-            <div class="notification-message">This feature is coming soon</div>
+            <div class="notification-message">${message}</div>
         </div>
         <button class="notification-close">&times;</button>
     `;
@@ -352,12 +350,13 @@ function showComingSoonNotification(featureName) {
 // Стили
 document.addEventListener('DOMContentLoaded', function() {
     const style = document.createElement('style');
+    const message = document.querySelector('.feature-coming-soon').getAttribute('message');
     document.head.appendChild(style);
     
     document.querySelectorAll('.feature-coming-soon').forEach(element => {
         element.addEventListener('click', function(e) {
             e.preventDefault();
-            showComingSoonNotification();
+            showComingSoonNotification(message);
         });
     });
 });
@@ -416,7 +415,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const style = document.createElement('style');
     document.head.appendChild(style);
     
-    document.querySelectorAll('.error-notification').forEach(element => {
+    document.querySelectorAll('.feature-error-notification').forEach(element => {
         element.addEventListener('click', function(e) {
             e.preventDefault();
             showErrorNotification();
@@ -477,7 +476,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const style = document.createElement('style');
     document.head.appendChild(style);
     
-    document.querySelectorAll('.success-notification').forEach(element => {
+    document.querySelectorAll('.feature-success-notification').forEach(element => {
         element.addEventListener('click', function(e) {
             e.preventDefault();
             showSuccessNotification();

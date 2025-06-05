@@ -27,6 +27,8 @@ urlpatterns = [
     path('cabinet/', include('cabinet.urls')),
     
     path('logout/', auth_views.LogoutView.as_view(next_page='/'), name='logout'),
+
+    path('api/', include('API.urls'))
 ]
 
 if settings.DEBUG:

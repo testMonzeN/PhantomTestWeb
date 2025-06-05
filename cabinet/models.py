@@ -52,6 +52,11 @@ class SubscriptionType(models.Model):
 
 
 class User(AbstractUser):
+
+    otp_secret = models.CharField(max_length=16, null=True, blank=True)
+    otp_auth_url = models.CharField(max_length=100, null=True, blank=True)
+    mfa_enabled = models.BooleanField(default=False)
+
     registration_date = models.DateTimeField(auto_now_add=True)
     last_login_date = models.DateTimeField(auto_now=True)
     HWID = models.CharField(max_length=100, blank=True, null=True)
@@ -60,6 +65,12 @@ class User(AbstractUser):
     is_subscribed = models.BooleanField(default=False)
     subscription_end_date = models.DateTimeField(null=True, blank=True)
     subscription_type = models.ForeignKey(SubscriptionType, on_delete=models.CASCADE, null=True, blank=True)
+
+    def get_role(self):
+        if self.role_user:
+            return self.role_user.name
+        else:
+            return 'Default'
 
     def get_subscription_type(self):
         if self.is_subscribed and self.subscription_type:

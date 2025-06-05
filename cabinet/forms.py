@@ -30,11 +30,14 @@ class CustomUserRegisterForm(UserCreationForm):
 class CustomLoginForm(forms.Form):
     username = forms.CharField(max_length=100)
     password = forms.CharField(widget=forms.PasswordInput)
+    otpcode = forms.CharField(max_length=6, required=False)
+
     
     def clean(self):
         cleaned_data = super().clean()
         username = cleaned_data.get('username')
         password = cleaned_data.get('password')
+        otpcode = cleaned_data.get('otpcode')
                
         return cleaned_data
 

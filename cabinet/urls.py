@@ -2,7 +2,7 @@ from django.urls import path
 from .views import (
     CabinetView, RegisterView, LoginView, 
     UserChangeView, ActivateKeyView, DownloadLauncherView, 
-    LogoutView
+    LogoutView, Authentication
 )
 
 
@@ -18,5 +18,8 @@ urlpatterns = [
     
     path('download-launcher/', DownloadLauncherView.as_view(), name='download_launcher'),
     path('activate-key/', ActivateKeyView.as_view(), name='activate_key'),
+
+    path('authentication/', Authentication.as_view(), name='authentication'),
+
 ]
     
