@@ -7,3 +7,6 @@ django-widget-tweaks
 django-ratelimit
 django-rest-framework
 qrcode
+pyotp
+base64
+io
