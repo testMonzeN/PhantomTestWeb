@@ -47,6 +47,7 @@ class CabinetView(View):
             
         return render(request, 'account/index.html', {
             'user': user, 
+            'is_subscribed': user.is_subscribed,
             'status_2fa': user.mfa_enabled,
             'mfa_enabled': user.mfa_enabled, 
             'status_user': status_user,
@@ -77,7 +78,6 @@ class LoginView(View):
         return render(request, 'login/login.html', {'form': form})
     
     def post(self, request):
-    # Если пришёл только код 2FA
         if 'code' in request.POST:
             form2 = OtpCodeUserChangeForm(request.POST)
             username = request.session.get('tmp_username')
@@ -93,7 +93,7 @@ class LoginView(View):
                 totp = pyotp.TOTP(user.otp_secret)
                 if totp.verify(code):
                     login(request, user)
-                    # Очищаем временные данные
+
                     request.session.pop('tmp_username', None)
                     request.session.pop('tmp_password', None)
                     return redirect('cabinet')
@@ -101,7 +101,7 @@ class LoginView(View):
                     form2.add_error('code', 'Неверный код')
             return render(request, '2-fa/accept.html', {'form': form2})
 
-        # Обычный вход (логин + пароль)
+        # Обычный вход 
         form = CustomLoginForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data['username']
@@ -109,7 +109,6 @@ class LoginView(View):
             user = authenticate(username=username, password=password)
             if user is not None:
                 if user.mfa_enabled:
-                    # Сохраняем данные для второго шага
                     request.session['tmp_username'] = username
                     request.session['tmp_password'] = password
                     form2 = OtpCodeUserChangeForm()
@@ -122,7 +121,6 @@ class LoginView(View):
                     user = User.objects.get(username=username)
                     if check_password(password, user.password):
                         if user.mfa_enabled:
-                            # Сохраняем данные для второго шага
                             request.session['tmp_username'] = username
                             request.session['tmp_password'] = password
                             form2 = OtpCodeUserChangeForm()
