@@ -100,7 +100,7 @@
                         <div class="info-label">
                             <i class="fas fa-lock"></i> Two-factor authentication
                         </div>
-                        <div class="info-value {% if user.is_2fa_enabled %}enabled{% else %}disabled{% endif %}">
+                        <div class="info-value {% if user.mfa_enabled %}enabled{% else %}disabled{% endif %}">
                             {% if user.is_2fa_enabled %}Enabled{% else %}Disabled{% endif %}
                         </div>
                     </div>

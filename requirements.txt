@@ -8,4 +8,3 @@ django-ratelimit
 django-rest-framework
 qrcode
 pyotp
-django-allauth

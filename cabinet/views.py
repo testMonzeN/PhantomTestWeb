@@ -47,6 +47,7 @@ class CabinetView(View):
             
         return render(request, 'account/index.html', {
             'user': user, 
+            'status_2fa': user.mfa_enabled,
             'mfa_enabled': user.mfa_enabled, 
             'status_user': status_user,
             'subscription_time': subscription_time,
