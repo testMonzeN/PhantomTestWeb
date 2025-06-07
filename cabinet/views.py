@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth import login
-from .forms import CustomUserRegisterForm, CustomLoginForm, CustomUserChangeForm
+from .forms import CustomUserRegisterForm, CustomLoginForm, CustomUserChangeForm, OtpCodeUserChangeForm
 from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import check_password
 from .models import User, LicenseKey, Role
@@ -69,6 +69,7 @@ class RegisterView(View):
             return redirect('cabinet')
         return render(request, 'registration/registration.html', {'form': form})
 
+
 # Вход пользователя
 class LoginView(View):
     def get(self, request):
@@ -76,21 +77,43 @@ class LoginView(View):
         return render(request, 'login/login.html', {'form': form})
     
     def post(self, request):
+    # Если пришёл только код 2FA
+        if 'code' in request.POST:
+            form2 = OtpCodeUserChangeForm(request.POST)
+            username = request.session.get('tmp_username')
+            password = request.session.get('tmp_password')
+            if not username or not password:
+                return redirect('login')
+            try:
+                user = User.objects.get(username=username)
+            except User.DoesNotExist:
+                return redirect('login')
+            if form2.is_valid():
+                code = form2.cleaned_data.get('code')
+                totp = pyotp.TOTP(user.otp_secret)
+                if totp.verify(code):
+                    login(request, user)
+                    # Очищаем временные данные
+                    request.session.pop('tmp_username', None)
+                    request.session.pop('tmp_password', None)
+                    return redirect('cabinet')
+                else:
+                    form2.add_error('code', 'Неверный код')
+            return render(request, '2-fa/accept.html', {'form': form2})
+
+        # Обычный вход (логин + пароль)
         form = CustomLoginForm(request.POST)
-        
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-            otpcode = form.cleaned_data['otpcode']
-
-
             user = authenticate(username=username, password=password)
-            totp = pyotp.TOTP(user.otp_secret)
             if user is not None:
                 if user.mfa_enabled:
-                    if totp.verify(otpcode): 
-                        login(request, user)
-                        return redirect('cabinet')
+                    # Сохраняем данные для второго шага
+                    request.session['tmp_username'] = username
+                    request.session['tmp_password'] = password
+                    form2 = OtpCodeUserChangeForm()
+                    return render(request, '2-fa/accept.html', {'form': form2})
                 else:
                     login(request, user)
                     return redirect('cabinet')
@@ -99,9 +122,11 @@ class LoginView(View):
                     user = User.objects.get(username=username)
                     if check_password(password, user.password):
                         if user.mfa_enabled:
-                            if totp.verify(otpcode):
-                                login(request, user)
-                                return redirect('cabinet')
+                            # Сохраняем данные для второго шага
+                            request.session['tmp_username'] = username
+                            request.session['tmp_password'] = password
+                            form2 = OtpCodeUserChangeForm()
+                            return render(request, '2-fa/accept.html', {'form': form2})
                         else:
                             login(request, user)
                             return redirect('cabinet')
@@ -112,6 +137,8 @@ class LoginView(View):
         
         LogsView(request.user.username, 'Вход в систему')
         return render(request, 'login/login.html', {'form': form})
+
+
 
 class LogoutView(View):
     def get(self, request):

@@ -16,27 +16,17 @@
                     
                     {% if form.errors %}
                     <div class="error-message">
-                        <p>Имя пользователя или пароль неверны. Пожалуйста, попробуйте снова.</p>
+                        <p>Введен некорректный код. Попробуйте снова!</p>
                     </div>
                     {% endif %}
                     
                     <div class="form-group">
-                        <label for="id_username">Имя пользователя</label>
-                        <input type="text" name="username" id="id_username" required>
+                        <label for="id_code">2fa код подтверждения</label>
+                        <input type="text" name="code" id="id_code" required>
                     </div>
-                    
-                    <div class="form-group">
-                        <label for="id_password">Пароль</label>
-                        <input type="password" name="password" id="id_password" required>
-                    </div>
-                   
+                                      
                     <div class="form-actions">
                         <button type="submit" class="login-btn">Войти</button>
-                    </div>
-                    
-                    <div class="form-links">
-                        <!--<a href="{% url 'change' %}" class="form-link">Забыли пароль?</a> -->
-                        <a href="{% url 'register' %}" class="form-link">Регистрация</a>
                     </div>
                 </form>
             </div>

@@ -30,14 +30,12 @@ class CustomUserRegisterForm(UserCreationForm):
 class CustomLoginForm(forms.Form):
     username = forms.CharField(max_length=100)
     password = forms.CharField(widget=forms.PasswordInput)
-    otpcode = forms.CharField(max_length=6, required=False)
 
     
     def clean(self):
         cleaned_data = super().clean()
         username = cleaned_data.get('username')
         password = cleaned_data.get('password')
-        otpcode = cleaned_data.get('otpcode')
                
         return cleaned_data
 
@@ -57,7 +55,18 @@ class CustomUserChangeForm(PasswordChangeForm):
         widget=forms.PasswordInput(attrs={'class': 'form-control'}),
     )
 
+class OtpCodeUserChangeForm(forms.Form):
+    code = forms.CharField(
+        max_length=255, 
+        label='2FA код подтверждения'
+    )
 
+    def clean(self):
+        cleaned_data = super().clean()
+        code = cleaned_data.get('code')
+
+       
+        return cleaned_data
 
     
     
