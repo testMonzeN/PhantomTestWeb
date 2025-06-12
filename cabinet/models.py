@@ -66,6 +66,9 @@ class User(AbstractUser):
     subscription_end_date = models.DateTimeField(null=True, blank=True)
     subscription_type = models.ForeignKey(SubscriptionType, on_delete=models.CASCADE, null=True, blank=True)
 
+    def get_HWID(self):
+        return self.HWID
+    
     def get_role(self):
         if self.role_user:
             return self.role_user.name
