@@ -1,6 +1,7 @@
 services:
   web:
     build: 
+      context: .
       dockerfile: /root/deploy-site/Phantom/Dockerfile
     container_name: django_app
     volumes:
