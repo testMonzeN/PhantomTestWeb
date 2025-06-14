@@ -1,0 +1,58 @@
+{% extends 'global/base.html' %}
+{% load static %}
+
+{% block content %}
+<main class="main-content">
+    <div class="container">
+        <section class="dark-content-box">
+            <h1 class="hero">Contact Us</h1>
+            <p class="subtitle text-center">We're here to help. Get in touch with our team.</p>
+        
+            
+            <div class="social-buttons">
+                <a href="https://discord.gg/phantomdlc" target="_blank" class="social-btn discord">
+                    <div class="social-icon">
+                        <img src="{% static 'img/discord-icon.svg' %}" alt="Discord">
+                    </div>
+                    <div class="social-text">
+                        <h3>Discord</h3>
+                        <p>Присоединяйтесь к нашему серверу</p>
+                    </div>
+                </a>
+                
+                <a href="https://t.me/phantom_dlc" target="_blank" class="social-btn telegram">
+                    <div class="social-icon">
+                        <img src="{% static 'img/telegram-svgrepo-com.svg' %}" alt="Telegram">
+                    </div>
+                    <div class="social-text">
+                        <h3>Telegram</h3>
+                        <p>Новости и обновления</p>
+                    </div>
+                </a>
+                
+                <a href="#" target="_blank" class="social-btn vk feature-coming-soon">  
+                    <div class="social-icon">
+                        <img src="{% static 'img/vk-icon.svg' %}" alt="VK">
+                    </div>
+                    <div class="social-text">
+                        <h3>ВКонтакте</h3>
+                        <p>Наша официальная группа</p>
+                    </div>
+                </a>
+                
+                <a href="mailto:support@phantom.com" class="social-btn email feature-coming-soon">
+                    <div class="social-icon">
+                        <img src="{% static 'img/email-icon.svg' %}" alt="Email">
+                    </div>
+                    <div class="social-text">
+                        <h3>Email</h3>
+                        <p>support@phantom.com</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+    </div>
+</main>
+{% endblock %}
+
+

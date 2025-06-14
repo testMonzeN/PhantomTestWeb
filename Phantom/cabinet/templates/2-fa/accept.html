@@ -1,0 +1,36 @@
+{% extends 'global/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="login-wrapper">
+    <div class="container">
+        <div class="login-content dark-content-box">
+            <div class="login-form-container">
+                <div class="login-header">
+                    <h1>Вход в аккаунт</h1>
+                    <p>Введите данные для входа в личный кабинет</p>
+                </div>
+                
+                <form method="post" class="login-form">
+                    {% csrf_token %}
+                    
+                    {% if form.errors %}
+                    <div class="error-message">
+                        <p>Введен некорректный код. Попробуйте снова!</p>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="form-group">
+                        <label for="id_code">2fa код подтверждения</label>
+                        <input type="text" name="code" id="id_code" maxlength="6" required>
+                    </div>
+                                      
+                    <div class="form-actions">
+                        <button type="submit" class="login-btn">Войти</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

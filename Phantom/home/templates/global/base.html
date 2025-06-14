@@ -1,0 +1,81 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Phantom</title>
+    <link rel="icon" href="{% static 'img/phantom-final-logo.svg' %}" type="image/svg+xml">
+    <link rel="shortcut icon" href="{% static 'img/phantom-final-logo.svg' %}" type="image/svg+xml">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    {% block extra_styles %}{% endblock %}
+
+    <script>const currentUsername = "{{ request.user.username|default:'guest'}}";</script>
+</head>
+<body>
+    <div class="content-wrapper">
+        <header class="navbar">
+            <div class="container">
+                <!-- Структура для мобильных устройств -->
+                <div class="navbar-top">
+                    <a class="logo">
+                        <img>Phantom</img>
+                    </a>
+                    <div class="mobile-menu-toggle">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                </div>
+                
+                <!-- Оригинальная структура для десктопа -->
+                <a class="logo">
+                    <img>Phantom</img>
+                </a>
+                
+                <nav class="navigation">
+                    <ul class="nav-links">
+                        <li><a href="{% url 'home' %}" {% if request.path == '/' %}class="active"{% endif %}>Home</a></li>
+                        <li><a href="{% url 'features' %}" {% if request.path == '/features/' %}class="active"{% endif %}>Features</a></li>
+                        <li><a href="{% url 'pricing' %}" {% if request.path == '/pricing/' %}class="active"{% endif %}>Pricing</a></li>
+                        <li><a href="{% url 'contacts' %}" {% if request.path == '/contacts/' %}class="active"{% endif %}>Contacts</a></li>
+                    </ul>
+                    <div class="nav-right">
+                        <div class="lang-switcher">EN</div>
+                        {% if request.user.is_authenticated %}
+                            <a href="{% url 'cabinet' %}" class="cabinet-btn">Cabinet</a>
+                        {% else %}
+                            <a href="{% url 'login' %}" class="cabinet-btn">Login</a>
+                        {% endif %}
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        {% block content %}
+        {% endblock %}
+    </div>
+    
+    <footer class="dark-footer">
+        <div class="container">
+            <p>© 2025 Phantom. All rights reserved.</p>
+            <div class="social-links">
+                <a href="https://t.me/phantom_dlc" class="collapse"><i class="fab fa-telegram"></i></a>
+                <a href="https://discord.gg/phantomdlc" data-target="discord" class="collapse"><i class="fab fa-discord"></i></a>
+                <a href="" data-target="vk" class="collapse feature-coming-soon"><i class="fab fa-vk"></i></a>
+            </div>
+            <div class="developer-info">
+                <p>code by <a href="https://github.com/testMonzeN" target="_blank"><i class="fab fa-github"></i> karadev</a></p>
+            </div>
+        </div>
+    </footer>
+    <script src="{% static 'js/script.js' %}"></script>
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>
+
+
+
+

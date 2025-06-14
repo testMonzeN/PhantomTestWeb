@@ -1,0 +1,178 @@
+{% extends 'global/base.html' %}
+{% load static %}
+
+{% block content %}
+{% csrf_token %}
+<div class="account-wrapper">
+    <div class="container">
+        <div class="account-content dark-content-box">
+            <div class="account-panel">
+                <!-- Левая панель с информацией о пользователе -->
+                <div class="account-user-panel">
+                    <div class="user-avatar">
+                        <img src="{% static 'img/default_avatar.jpg' %}" alt="{{ user.username }}">
+                    </div>
+                    <div class="user-status">{{ status_user }}</div>
+                    <div class="user-name">{{ user.username }} <span class="user-id">uid {{ user.id }}</span></div>
+                    
+                    <div class="account-actions">
+                        {% if request.user.is_subscribed %}
+                            <a href="{% url 'download_launcher' %}" class="account-action-btn">
+                                <i class="fas fa-download"></i> Download client
+                            </a>
+                        {% else %}
+                            <a href="{% url 'cabinet' %}" class="account-action-btn feature-coming-soon" message="У вас нету подписки для установки лаунчера">
+                                <i class="fas fa-download"></i> Download client
+                            </a>
+                        {% endif %}
+
+
+                        {% if not mfa_enabled %}
+                            <a href="{% url 'authentication' %}" class="account-action-btn">
+                                <i class="fas fa-shield-alt"></i> 2FA Authenticator
+                            </a>
+                        {% else %}
+                            <a href="{% url 'cabinet' %}" class="account-action-btn feature-coming-soon" message="2FA Authenticator уже включен" id="2fa-enabled">
+                                <i class="fas fa-shield-alt"></i> 2FA Authenticator
+                            </a>
+                        {% endif %}
+                        <a href="{% url 'change' %}" class="account-action-btn">
+                            <i class="fas fa-key"></i> Reset password
+                        </a>
+                        <a href="https://discord.gg/phantomdlc" class="account-action-btn" target="_blank">
+                            <i class="fab fa-discord"></i> Discord server
+                        </a>
+
+                        <a href="{% url 'logout' %}" class="account-action-btn logout-btn">
+                            <i class="fas fa-sign-out-alt"></i> Sign out
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Правая панель с информацией об аккаунте -->
+                <div class="account-info-panel">
+                    <div class="account-info-item">
+                        <div class="info-label">
+                            <i class="far fa-calendar-alt"></i> Registration date
+                        </div>
+                        <div class="info-value">
+                            {{ user.registration_date|date:"F j, Y \a\t H:i A" }}
+                        </div>
+                    </div>
+                    
+                    <div class="account-info-item">
+                        <div class="info-label">
+                            <i class="far fa-clock"></i> Last login date
+                        </div>
+                        <div class="info-value">
+                            {{ user.last_login_date|date:"F j, Y \a\t H:i A" }}
+                        </div>
+                    </div>
+                    
+                    <div class="account-info-item">
+                        <div class="info-label">
+                            <i class="fas fa-user-tag"></i> Role
+                        </div>
+                        <div class="info-value premium-role">
+                            {% if user.role_user.name %}{{ user.role_user.name }}{% else %}Default{% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="account-info-item">
+                        <div class="info-label">
+                            <i class="fas fa-microchip"></i> Hardware ID
+                        </div>
+                        <div class="info-value hardware-id">
+                            {% if user.HWID %}{{ user.HWID }}{% else %}None{% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="account-info-item">
+                        <div class="info-label">
+                            <i class="far fa-envelope"></i> Email
+                        </div>
+                        <div class="info-value">
+                            {{ user.email }}
+                        </div>
+                    </div>
+                                        
+                    <div class="account-info-item">
+                        <div class="info-label">
+                            <i class="fas fa-lock"></i> Two-factor authentication
+                        </div>
+                        <div class="info-value {% if status_2fa %}enabled{% else %}disabled{% endif %}">
+                            {% if status_2fa %}Enabled{% else %}Disabled{% endif %}
+                        </div>
+                    </div>
+
+                    
+                    <!-- Таймер подписки -->
+                    <div class="subscription-info">
+                        <div class="subscription-title">SUBSCRIPTION TIME LEFT</div>
+                        {% if user.is_subscribed %}
+                            <div class="subscription-timer">
+                                <div class="timer-item">
+                                    <span class="timer-value">{{ user.get_subscription_time_left.years|stringformat:"02d" }}</span>
+                                    <span class="timer-label">y</span>
+                                </div>
+                                <div class="timer-item">
+                                    <span class="timer-value">{{ user.get_subscription_time_left.days|stringformat:"02d" }}</span>
+                                    <span class="timer-label">d</span>
+                                </div>
+                                <div class="timer-item">
+                                    <span class="timer-value">{{ user.get_subscription_time_left.hours|stringformat:"02d" }}</span>
+                                    <span class="timer-label">h</span>
+                                </div>
+                                <div class="timer-item">
+                                    <span class="timer-value">{{ user.get_subscription_time_left.minutes|stringformat:"02d" }}</span>
+                                    <span class="timer-label">m</span>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="subscription-timer">
+                                <div class="timer-item">
+                                    <span class="timer-value">00</span>
+                                    <span class="timer-label">y</span>
+                                </div>
+                                <div class="timer-item">
+                                    <span class="timer-value">00</span>
+                                    <span class="timer-label">d</span>
+                                </div>
+                                <div class="timer-item">
+                                    <span class="timer-value">00</span>
+                                    <span class="timer-label">h</span>
+                                </div>
+                                <div class="timer-item">
+                                    <span class="timer-value">00</span>
+                                    <span class="timer-label">m</span>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Форма активации ключа -->
+                    <div class="key-activation-section">
+                        <h3>Активация лицензионного ключа</h3>
+                        <form action="{% url 'activate_key' %}" method="post" class="key-activation-form">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <input type="text" name="license_key" placeholder="XXXX-XXXX-XXXX-XXXX" required>
+                                <button class="btn" type="submit">Активировать</button>
+                            </div>
+                            {% if key_activation_message %}
+                                <div class="activation-message {% if key_activation_success %}success{% else %}error{% endif %}">
+                                    {{ key_activation_message }}
+                                </div>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+{% endblock %}
