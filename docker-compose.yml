@@ -1,3 +1,7 @@
+networks:
+  dev:
+
+
 services:
   web:
     build: .
@@ -9,9 +13,11 @@ services:
       - .env
     expose:
       - 8000
+    networks:
+      - dev
 
   nginx:
-    image: nginx:latest
+    image: nginx:stable-alphe
     container_name: nginx_proxy
     ports:
       - "80:80"
@@ -21,6 +27,8 @@ services:
       - media_volume:/app/media
     depends_on:
       - web
+    networks:
+      - dev
 
 volumes:
   static_volume:
