@@ -9,8 +9,6 @@ services:
     volumes:
       - static_volume:/app/staticfiles
       - media_volume:/app/media
-    env_file:
-      - .env
     expose:
       - 8000
     networks:
