@@ -15,7 +15,7 @@ services:
       - dev
 
   nginx:
-    image: nginx:stable-alphe
+    image: nginx:latest
     container_name: nginx_proxy
     ports:
       - "80:80"
