@@ -1,6 +1,8 @@
 services:
   web:
-    build: .
+    build: 
+      context: .
+      dockerfile: /root/deploy-site/
     container_name: django_app
     volumes:
       - static_volume:/app/staticfiles
