@@ -1,6 +1,7 @@
 services:
   web:
-    build: ~/Phantom/
+    build: 
+      dockerfile: /root/deploy-site/Phantom/Dockerfile
     container_name: django_app
     volumes:
       - static_volume:/app/staticfiles
