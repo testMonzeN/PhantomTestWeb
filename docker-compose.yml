@@ -18,8 +18,8 @@ services:
       - "80:80"
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
-      - static_volume:/app/staticfiles
-      - media_volume:/app/media
+      - static_volume:/Phantom/staticfiles
+      - media_volume:/Phantom/media
     depends_on:
       - web
 
