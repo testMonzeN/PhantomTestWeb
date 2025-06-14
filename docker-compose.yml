@@ -5,8 +5,8 @@ services:
       dockerfile: Dockerfile
     container_name: django_app
     volumes:
-      - static_volume:/app/staticfiles
-      - media_volume:/app/media
+      - static_volume:/Phantom/staticfiles
+      - media_volume:/Phantom/media
     expose:
       - 8000
 
