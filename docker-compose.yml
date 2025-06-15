@@ -6,7 +6,7 @@ services:
     container_name: django_app
     volumes:
       - static_volume:/app/static
-      - media_volume:/app/media
+      - media_volume:/root/deploy-site/Phantom/media
     expose:
       - 8000
 
