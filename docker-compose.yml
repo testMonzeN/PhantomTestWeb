@@ -19,7 +19,7 @@ services:
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf 
       - static_volume:/app/static
-      - media_volume:./Phantom/media
+      - media_volume:/root/deploy-site/Phantom/media
     depends_on:
       - web
 
