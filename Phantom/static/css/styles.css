@@ -21,7 +21,7 @@ html, body {
 
 body {
     background-color: var(--dark-bg);
-    background-image: url('/media/background.png');
+    background-image: url('/app/media/background.png');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
