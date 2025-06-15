@@ -16,7 +16,7 @@ url = 'http://127.0.0.1:8000/api/users/'
 params = {'name': 't', 'password': '1324rtgh'}
 
 res = requests.get(url, data=params).json()
-'''
+
 
 
 
@@ -29,3 +29,4 @@ data = {
 res = requests.post(url, data=data).json()
 
 print(res)
+'''
