@@ -143,6 +143,10 @@ class LogoutView(View):
         logout(request)
         return redirect('home')
     
+    def post(self, request):
+        return self.get(request)
+    
+    
 
 # Представление для активации ключа
 class ActivateKeyView(View):   
