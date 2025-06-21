@@ -138,16 +138,13 @@ class LoginView(View):
 
 
 
-class LogoutView(View):
+class LogoutAccountView(View):
     def get(self, request):
         logout(request)
         return redirect('home')
     
     def post(self, request):
-        logout(request)
-        request.session.clear()
-        return redirect('home')
-    
+        return self.get(request)
     
 
 # Представление для активации ключа
