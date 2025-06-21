@@ -42,10 +42,12 @@
                         <a href="https://discord.gg/phantomdlc" class="account-action-btn" target="_blank">
                             <i class="fab fa-discord"></i> Discord server
                         </a>
-
-                        <a href="{% url 'logout' %}" class="account-action-btn logout-btn">
-                            <i class="fas fa-sign-out-alt"></i> Sign out
-                        </a>
+                        <form action="{% url 'logout' %}" method="post" class="logout-form">
+                            {% csrf_token %}
+                            <button type="submit" class="account-action-btn logout-btn">
+                                <i class="fas fa-sign-out-alt"></i> Sign out
+                            </button>
+                        </form>
                     </div>
                 </div>
                 
