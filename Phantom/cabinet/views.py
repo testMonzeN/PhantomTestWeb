@@ -144,7 +144,9 @@ class LogoutView(View):
         return redirect('home')
     
     def post(self, request):
-        return self.get(request)
+        logout(request)
+        request.session.clear()
+        return redirect('home')
     
     
 
