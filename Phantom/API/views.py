@@ -43,8 +43,22 @@ class UserViewSet(viewsets.ModelViewSet):
         metod = request.data.get('metod')
         if metod:        
             if metod == 'all_metods':
-                return Response({'metods': ['get_into', 'get_hwid', 'get_field_user', 'new_user', 'change_password', 'HWID']}, status=status.HTTP_200_OK)
-            
+                metod_name = request.data.get('metod_name')
+                if metod_name:
+                    if metod_name == 'get_into':
+                        return Response({'get_into': 'This is metid return list all metods'}, status=status.HTTP_200_OK)
+                    if metod_name == 'get_hwid':
+                        return Response({'get_hwid': 'This is metid return HWID'}, status=status.HTTP_200_OK)
+                    if metod_name == 'get_field_user':
+                        return Response({'get_field_user': 'This is metid return field user'}, status=status.HTTP_200_OK)
+                    if metod_name == 'new_user':
+                        return Response({'new_user': 'This is metid return new user'}, status=status.HTTP_200_OK)
+                    if metod_name == 'change_password':
+                        return Response({'change_password': 'This is metid return change password'}, status=status.HTTP_200_OK)
+                    if metod_name == 'HWID':
+                        return Response({'HWID': 'This is metid return HWID'}, status=status.HTTP_200_OK)
+                else:
+                    return Response({'metods': ['get_into', 'get_hwid', 'get_field_user', 'new_user', 'change_password', 'HWID']}, status=status.HTTP_200_OK)            
             if metod == 'get_into':
                 name = request.data.get('name')
                 pas = request.data.get('password')
