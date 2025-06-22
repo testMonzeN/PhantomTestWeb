@@ -17,27 +17,6 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserViewSet(viewsets.ModelViewSet):
-    '''
-    metods API django rest framework:
-
-    def list(self, request):
-        pass
-
-    def create(self, request):
-        pass
-
-    def retrieve(self, request, pk=None):
-        pass
-
-    def update(self, request, pk=None):
-        pass
-
-    def partial_update(self, request, pk=None):
-        pass
-
-    def destroy(self, request, pk=None):
-        pass
-    '''
     # get
     def list(self, request):
         metod = request.data.get('metod')
@@ -64,6 +43,7 @@ class UserViewSet(viewsets.ModelViewSet):
                 name = request.data.get('name')
                 pas = request.data.get('password')
                 user = authenticate(username=name, password=pas)
+
                 if user is not None:
                     queryset = user
                     serializer = UserSerializer(queryset)
@@ -83,6 +63,7 @@ class UserViewSet(viewsets.ModelViewSet):
                 name = request.data.get('name')
                 pas = request.data.get('password')
                 user = authenticate(username=name, password=pas)
+
                 if user is not None:
                     return Response({'message': 'Login successful', 'status': True}, status=status.HTTP_200_OK)
                 else:
@@ -108,17 +89,18 @@ class UserViewSet(viewsets.ModelViewSet):
                         if not user.HWID:
                             user.HWID = new_hwid
                             user.save()
+
                             return Response({'HWID': user.HWID,}, status=status.HTTP_200_OK)
                     
                     return Response({'HWID': user.HWID,}, status=status.HTTP_403_FORBIDDEN)
                 else:
-
                     return Response({'HWID': None}, status=status.HTTP_404_NOT_FOUND)
             
             if metod == 'new_user':
                 form = CustomUserRegisterForm(request.data)
                 if form.is_valid():
                     form.save()
+
                     return Response({'message': 'User created successfully'}, status=status.HTTP_200_OK)
                 else:
                     return Response({'message': 'User creation failed'}, status=status.HTTP_400_BAD_REQUEST)
@@ -127,6 +109,7 @@ class UserViewSet(viewsets.ModelViewSet):
                 form = CustomUserChangeForm(request.data)
                 if form.is_valid():
                     form.save()
+                    
                     return Response({'message': 'Password changed successfully'}, status=status.HTTP_200_OK)
                 else:
                     return Response({'message': 'Password change failed'}, status=status.HTTP_400_BAD_REQUEST)

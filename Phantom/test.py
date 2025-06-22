@@ -1,39 +1,22 @@
-import requests
-
 '''
-HWID = 'asdasd11233131231assd2r34AFAas32_123134'
-
-
-name = input()
-password = input()
-
-url = 'http://127.0.0.1:8000/api/users/'
-params = {'name': name, 'password': password}
-
-res = requests.post(url, data=params)
-
-url = 'http://127.0.0.1:8000/api/users/'
-params = {'name': 't', 'password': '1324rtgh'}
-
-res = requests.get(url, data=params).json()
-
-
-
-
-url = 'http://127.0.0.1:8000/api/users/'
-data = {
-    'name': '123123123123', 
-    'password': '1324rtgh',
-    'HWID': '75757757575'
-}
-res = requests.post(url, data=data).json()
-
-print(res)
+metods API django rest framework:
+def list(self, request):
+    pass
+    
+def create(self, request):
+    pass
+    
+def retrieve(self, request, pk=None):
+    pass
+    
+def update(self, request, pk=None):
+    pass
+    
+def partial_update(self, request, pk=None):
+    pass
+    
+def destroy(self, request, pk=None):
+    pass
+        
 '''
 
-res = requests.get('http://185.232.169.130/api/users/', data={
-    'metod': 'get_field_user',
-    'name': 't',
-    'field': 'HWID',
-}).json()
-print(res)
