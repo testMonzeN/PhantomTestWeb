@@ -86,7 +86,7 @@ class UserViewSet(viewsets.ModelViewSet):
                 if field not in field_list:
                     return Response({'message': 'Field is not allowed to be retrieved'}, status=status.HTTP_400_BAD_REQUEST)
                 else:
-                    user = User.objects.get(username=name).only(field)
+                    user = User.objects.get(username=name).only(f'{field}').first()
                     if user is not None:
                         queryset = user
                         serializer = UserSerializer(queryset)

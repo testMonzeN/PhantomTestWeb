@@ -32,6 +32,8 @@ print(res)
 '''
 
 res = requests.get('http://185.232.169.130/api/users/', data={
-    'metod': 'all_metods'
+    'metod': 'get_field_user',
+    'name': 't',
+    'field': 'HWID',
 }).json()
 print(res)
