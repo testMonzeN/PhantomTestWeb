@@ -30,3 +30,8 @@ res = requests.post(url, data=data).json()
 
 print(res)
 '''
+
+res = requests.get('http://185.232.169.130/api/users/', data={
+    
+}).json()
+print(res)
