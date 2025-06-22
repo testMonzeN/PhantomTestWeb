@@ -1,6 +1,12 @@
 {% extends 'global/base.html' %}
 {% load static %}
 
+{% block name_page %}
+<script>
+    const currentNamePage = "Account";
+</script>
+{% endblock %}
+
 {% block content %}
 {% csrf_token %}
 <div class="account-wrapper">

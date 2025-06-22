@@ -250,10 +250,11 @@ document.title = "Phantom";
 document.addEventListener('DOMContentLoaded', function() {
     const baseTitle = "Phantom";
     const phrases = [
+        "| " + currentNamePage,
         "| Нечто большее",
         "| Скрытие читов",
         "| Welcome to Phantom",
-        "| Welcome " + currentUsername,
+        "| Welcome " +  "'" + currentUsername + "'",
     ];
     
     let currentPhrase = 0;

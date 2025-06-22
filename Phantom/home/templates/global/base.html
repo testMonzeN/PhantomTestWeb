@@ -14,7 +14,10 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     {% block extra_styles %}{% endblock %}
 
-    <script>const currentUsername = "{{ request.user.username|default:'guest'}}";</script>
+    <script>
+    const currentUsername = "{{ request.user.username|default:'guest' }}";
+    </script>
+    {% block name_page %}{% endblock %}
 </head>
 <body>
     <div class="content-wrapper">
