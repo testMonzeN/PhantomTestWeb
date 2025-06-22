@@ -10,4 +10,4 @@ COPY . .
 RUN python manage.py collectstatic --noinput
 
 EXPOSE 8000
-CMD ["uwsgi", "--http", ":8000", "--module", "Phantom.wsgi:application", "--static-map", "/static=/app/static", "--static-map", "/media=/app/media"]
+CMD ["uwsgi", "--http", ":8000", "--module", "Phantom.wsgi:application", "--static-map", "/static=/app/staticfiles", "--static-map", "/media=/app/media"]
