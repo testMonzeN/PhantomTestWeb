@@ -13,7 +13,7 @@ from cabinet.forms import CustomUserRegisterForm, CustomUserChangeForm
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['username', 'HWID', 'is_subscribed', 'id']
+        fields = ['id', 'username', 'is_subscribed', 'HWID']
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -78,7 +78,15 @@ class UserViewSet(viewsets.ModelViewSet):
                     queryset = user
                     serializer = UserSerializer(queryset)
                     return Response(serializer.data)
-                
+            
+            if metod == 'login':
+                name = request.data.get('name')
+                pas = request.data.get('password')
+                user = authenticate(username=name, password=pas)
+                if user is not None:
+                    return Response({'message': 'Login successful', 'status': True}, status=status.HTTP_200_OK)
+                else:
+                    return Response({'message': 'Login failed', 'status': False}, status=status.HTTP_400_BAD_REQUEST)
         else:
             queryset = User.objects.all()
             serializer = UserSerializer(queryset, many=True)
