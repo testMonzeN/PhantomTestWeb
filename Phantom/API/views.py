@@ -58,7 +58,8 @@ class UserViewSet(viewsets.ModelViewSet):
                     if metod_name == 'HWID':
                         return Response({'HWID': 'This is metid return HWID'}, status=status.HTTP_200_OK)
                 else:
-                    return Response({'metods': ['get_into', 'get_hwid', 'get_field_user', 'new_user', 'change_password', 'HWID']}, status=status.HTTP_200_OK)            
+                    return Response({'metods': ['get_into', 'get_hwid', 'get_field_user', 'new_user', 'change_password', 'HWID']}, status=status.HTTP_200_OK)    
+                        
             if metod == 'get_into':
                 name = request.data.get('name')
                 pas = request.data.get('password')
