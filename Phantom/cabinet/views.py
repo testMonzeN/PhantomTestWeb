@@ -225,8 +225,8 @@ class DownloadLauncherView(View):
         if not self.check(request=request):
             return redirect('cabinet')
         else:
-            file_path = os.path.join(settings.BASE_DIR, 'YOUR_FILE.txt')    # YOUR_FILE.txt - изменить на будуший лаунчер 
-            file_name = 'launcher.txt'                                      # launcher.txt -> phantom.exr 
+            file_path = os.path.join(settings.BASE_DIR, 'YOUR_FILE.txt')    # YOUR_FILE.txt - изменить на будуший лаунчер / билдер 
+            file_name = 'launcher.txt'                                      # launcher.txt -> phantom.exe
 
             if os.path.exists(file_path):
                 with open(file_path, 'rb') as fh:
