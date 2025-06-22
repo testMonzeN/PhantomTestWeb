@@ -77,22 +77,6 @@ class UserViewSet(viewsets.ModelViewSet):
                     queryset = user
                     serializer = UserSerializer(queryset)
                     return Response(serializer.data)
-            
-            if metod == 'get_field_user':
-                name = request.data.get('name')
-                field = request.data.get('field')
-
-                field_list = ['role_user', 'HWID', 'is_subscribed', 'subscription_end_date', 'subscription_type', 'id', 'username']
-                if field not in field_list:
-                    return Response({'message': 'Field is not allowed to be retrieved'}, status=status.HTTP_400_BAD_REQUEST)
-                else:
-                    user = User.objects.get(username=name).only(f'{field}').first()
-                    if user is not None:
-                        queryset = user
-                        serializer = UserSerializer(queryset)
-                        return Response(serializer.data)
-                    else:
-                        return Response({'message': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
                 
         else:
             queryset = User.objects.all()
