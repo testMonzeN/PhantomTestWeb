@@ -254,7 +254,7 @@ document.addEventListener('DOMContentLoaded', function() {
         "| Нечто большее",
         "| Скрытие читов",
         "| Welcome to Phantom",
-        "| Welcome " +  "'" + currentUsername + "'",
+        "| Welcome " +  '"' + currentUsername + '"',
     ];
     
     let currentPhrase = 0;
