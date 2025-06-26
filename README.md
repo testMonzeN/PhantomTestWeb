@@ -303,5 +303,4 @@ hwid_response = requests.get("https://your_domen.net/api/users/", data={
    - Не используйте DEBUG=True в продакшене
 
 4. **Файл YOUR_File.txt**:
-   - Вероятно содержит специфичные настройки проекта
-   - Может потребовать ручной конфигурации
+   - Ваш продукт
