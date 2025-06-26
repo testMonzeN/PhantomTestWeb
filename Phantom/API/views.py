@@ -92,7 +92,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
                             return Response({'HWID': user.HWID,}, status=status.HTTP_200_OK)
                     
-                    return Response({'HWID': user.HWID,}, status=status.HTTP_403_FORBIDDEN)
+                    return Response({'HWID': user.HWID}, status=status.HTTP_403_FORBIDDEN)
                 else:
                     return Response({'HWID': None}, status=status.HTTP_404_NOT_FOUND)
             
