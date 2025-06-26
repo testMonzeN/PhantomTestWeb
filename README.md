@@ -53,10 +53,6 @@ deploy-site/
 │   │   ├── urls.py        # - 
 │   │   └── views.py       # Функции логов
 │   ├── Phantom/           # Главная папка
-│   ├── static/            # Статика 
-│   │   ├── css/           # css сайта
-│   │   ├── js/            # js сайта
-│   │   ├── img/           # логотипы сайта
 │   ├── manage.py          # Django CLI
 │   ├── requirements.txt   # Зависимости Python
 │   ├── Dockerfile         # Конфигурация образа Django
@@ -269,7 +265,7 @@ response = requests.post("https://your_domen.net/api/users/", data={
 })
 
 # Получение HWID
-hwid_response = requests.post("https://your_domen.net/api/users/", data={
+hwid_response = requests.get("https://your_domen.net/api/users/", data={
     "metod": "get_hwid",
     "name": "testuser"
 })
