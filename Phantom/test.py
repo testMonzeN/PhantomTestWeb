@@ -20,3 +20,12 @@ def destroy(self, request, pk=None):
         
 '''
 
+import requests
+
+res = requests.get('http://127.0.0.1:8000/api/users/', data = {
+    'metod': 'login',
+    'name': 't',
+    'password': '1324rtgh',
+}).json()
+
+print(res)

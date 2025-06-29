@@ -8,7 +8,12 @@ from rest_framework.decorators import action
 import json
 from django.contrib.auth import authenticate
 from cabinet.forms import CustomUserRegisterForm, CustomUserChangeForm
+import pyotp
 
+class CabinetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'role_user', 'email', 'HWID', 'is_subscribed', 'mfa_enabled', 'subscription_end_date', 'subscription_type', 'registration_date', 'last_login_date']
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -62,10 +67,23 @@ class UserViewSet(viewsets.ModelViewSet):
             if metod == 'login':
                 name = request.data.get('name')
                 pas = request.data.get('password')
+                print(name, pas)
                 user = authenticate(username=name, password=pas)
-
                 if user is not None:
-                    return Response({'message': 'Login successful', 'status': True}, status=status.HTTP_200_OK)
+                    if not user.mfa_enabled:
+                        serializer = CabinetSerializer(user)
+                        return Response(serializer.data)
+
+                    else:
+                        code = request.data.get('2fa-code')
+                        if code:
+                            totp = pyotp.TOTP(user.otp_secret)
+                            if totp.verify(code):
+                                serializer = CabinetSerializer(user)
+                                return Response(serializer.data)                            
+                        else: 
+                            return Response({'message': 'Send 2fa code', 'status': False}, status=status.HTTP_400_BAD_REQUEST)
+
                 else:
                     return Response({'message': 'Login failed', 'status': False}, status=status.HTTP_400_BAD_REQUEST)
         else:
