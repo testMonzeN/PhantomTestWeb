@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+  <defs>
+    <filter id="outerglow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="blur1" />
+      <feFlood flood-color="#7700bb" flood-opacity="0.5" result="color1" />
+      <feComposite in="color1" in2="blur1" operator="in" result="glow1" />
+      <feComposite in="glow1" in2="SourceGraphic" operator="over" />
+    </filter>
+    
+    <filter id="innerglow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="1.5" result="blur2" />
+      <feFlood flood-color="#cc33ff" flood-opacity="0.9" result="color2" />
+      <feComposite in="color2" in2="blur2" operator="in" result="glow2" />
+      <feComposite in="glow2" in2="SourceGraphic" operator="over" />
+    </filter>
+    
+    <filter id="brightglow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="0.5" result="blur3" />
+      <feFlood flood-color="#ffffff" flood-opacity="1" result="color3" />
+      <feComposite in="color3" in2="blur3" operator="in" result="glow3" />
+      <feComposite in="glow3" in2="SourceGraphic" operator="over" />
+    </filter>
+    
+    <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e580ff" />
+      <stop offset="50%" stop-color="#cc00ff" />
+      <stop offset="100%" stop-color="#9900cc" />
+    </linearGradient>
+  </defs>
+  
+  <rect x="0" y="0" width="100" height="100" fill="#000000" />
+  
+  <g filter="url(#outerglow)">
+    <path d="M 35,25 C 35,25 35,80 35,80 
+             M 35,25 C 35,25 50,20 60,20 C 75,25 80,35 75,50 C 70,65 55,65 35,55" 
+          fill="none" 
+          stroke="#9900ff" 
+          stroke-width="3.5" 
+          stroke-linecap="round" 
+          stroke-linejoin="round" />
+  </g>
+  
+  <g filter="url(#innerglow)">
+    <path d="M 35,25 C 35,25 35,80 35,80 
+             M 35,25 C 35,25 50,20 60,20 C 75,25 80,35 75,50 C 70,65 55,65 35,55" 
+          fill="none" 
+          stroke="url(#neonGradient)" 
+          stroke-width="2" 
+          stroke-linecap="round" 
+          stroke-linejoin="round" />
+  </g>
+  
+  <g filter="url(#brightglow)">
+    <path d="M 35,25 C 35,25 35,80 35,80 
+             M 35,25 C 35,25 50,20 60,20 C 75,25 80,35 75,50 C 70,65 55,65 35,55" 
+          fill="none" 
+          stroke="#ffffff" 
+          stroke-width="1" 
+          stroke-linecap="round" 
+          stroke-linejoin="round" />
+  </g>
+</svg> 

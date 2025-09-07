@@ -1,0 +1,61 @@
+{% extends 'global/base.html' %}
+{% load static %}
+
+{% block name_page %}
+<script>
+    const currentNamePage = "2FA Auth";
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <h4 class="hero">Двухфакторная аутентификации</h4>
+                        <img src="{{ qr_code }}" alt="{{ img_path }}">
+                    </div>
+                    <div class="auth-form">
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }}">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+
+                        {% if not user.otp_secret %}
+                            <div class="text-center">
+                                <p class="lead">Для повышения безопасности вашего аккаунта, пожалуйста, отсканируйте QR-код с помощью приложения аутентификации:</p>
+                                <div class="qr-container">
+                                    <img src="{{ qr_code }}" alt="QR Code">
+                                </div>
+                                <p class="text-muted">Или введите этот код вручную:</p>
+                                <div class="secret-key">{{ user.otp_secret }}</div>
+                            </div>
+                        {% else %}
+                            <form method="post" class="needs-validation" novalidate>
+                                {% csrf_token %}
+                                <div class="form-group mb-4">
+                                    <label for="otp_code" class="form-label">Введите код из приложения:</label>
+                                    <input type="text" class="form-control" id="otp_code" name="otp_code" 
+                                           placeholder="000000" required autocomplete="off" maxlength="6">
+                                </div>
+                                <button type="submit" class="account-action-btn">
+                                    Подтвердить
+                                </button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/2fa.css' %}">
+{% endblock %}

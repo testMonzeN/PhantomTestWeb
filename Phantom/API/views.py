@@ -1,0 +1,140 @@
+from rest_framework.views import APIView
+from rest_framework import serializers, status, viewsets
+from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
+from cabinet.models import User
+from django.shortcuts import get_object_or_404
+from rest_framework.decorators import action
+import json
+from django.contrib.auth import authenticate
+from cabinet.forms import CustomUserRegisterForm, CustomUserChangeForm
+import pyotp
+
+class CabinetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'role_user', 'email', 'HWID', 'is_subscribed', 'mfa_enabled', 'subscription_end_date', 'subscription_type', 'registration_date', 'last_login_date']
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'is_subscribed', 'HWID']
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    # get
+    def list(self, request):
+        metod = request.data.get('metod')
+        if metod:        
+            if metod == 'all_metods':
+                metod_name = request.data.get('metod_name')
+                if metod_name:
+                    if metod_name == 'get_into':
+                        return Response({'get_into': 'This is metid return list all metods'}, status=status.HTTP_200_OK)
+                    if metod_name == 'get_hwid':
+                        return Response({'get_hwid': 'This is metid return HWID'}, status=status.HTTP_200_OK)
+                    if metod_name == 'get_field_user':
+                        return Response({'get_field_user': 'This is metid return field user'}, status=status.HTTP_200_OK)
+                    if metod_name == 'new_user':
+                        return Response({'new_user': 'This is metid return new user'}, status=status.HTTP_200_OK)
+                    if metod_name == 'change_password':
+                        return Response({'change_password': 'This is metid return change password'}, status=status.HTTP_200_OK)
+                    if metod_name == 'HWID':
+                        return Response({'HWID': 'This is metid return HWID'}, status=status.HTTP_200_OK)
+                else:
+                    return Response({'metods': ['get_into', 'get_hwid', 'get_field_user', 'new_user', 'change_password', 'HWID']}, status=status.HTTP_200_OK)    
+                        
+            if metod == 'get_into':
+                name = request.data.get('name')
+                pas = request.data.get('password')
+                user = authenticate(username=name, password=pas)
+
+                if user is not None:
+                    queryset = user
+                    serializer = UserSerializer(queryset)
+
+                    return Response(serializer.data)
+
+            if metod == 'get_hwid':
+                name = request.data.get('name')
+                user = User.objects.get(username=name).only('HWID')
+
+                if user is not None:
+                    queryset = user
+                    serializer = UserSerializer(queryset)
+                    return Response(serializer.data)
+            
+            if metod == 'login':
+                name = request.data.get('name')
+                pas = request.data.get('password')
+                print(name, pas)
+                user = authenticate(username=name, password=pas)
+                if user is not None:
+                    if not user.mfa_enabled:
+                        serializer = CabinetSerializer(user)
+                        return Response(serializer.data)
+
+                    else:
+                        code = request.data.get('2fa-code')
+                        if code:
+                            totp = pyotp.TOTP(user.otp_secret)
+                            if totp.verify(code):
+                                serializer = CabinetSerializer(user)
+                                return Response(serializer.data)                            
+                        else: 
+                            return Response({'message': 'Send 2fa code', 'status': False}, status=status.HTTP_400_BAD_REQUEST)
+
+                else:
+                    return Response({'message': 'Login failed', 'status': False}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            queryset = User.objects.all()
+            serializer = UserSerializer(queryset, many=True)
+            return Response(serializer.data)
+
+    # post
+    def create(self, request):
+        metod = request.data.get('metod')
+
+        if metod:
+            if metod == 'HWID':
+                name = request.data.get('name')
+                pas = request.data.get('password')
+                new_hwid = request.data.get('HWID')
+
+                user = authenticate(username=name, password=pas)
+                if user is not None:
+                    if user.is_subscribed:
+                        if not user.HWID:
+                            user.HWID = new_hwid
+                            user.save()
+
+                            return Response({'HWID': user.HWID,}, status=status.HTTP_200_OK)
+                    
+                    return Response({'HWID': user.HWID}, status=status.HTTP_403_FORBIDDEN)
+                else:
+                    return Response({'HWID': None}, status=status.HTTP_404_NOT_FOUND)
+            
+            if metod == 'new_user':
+                form = CustomUserRegisterForm(request.data)
+                if form.is_valid():
+                    form.save()
+
+                    return Response({'message': 'User created successfully'}, status=status.HTTP_200_OK)
+                else:
+                    return Response({'message': 'User creation failed'}, status=status.HTTP_400_BAD_REQUEST)
+            
+            if metod == 'change_password':
+                form = CustomUserChangeForm(request.data)
+                if form.is_valid():
+                    form.save()
+                    
+                    return Response({'message': 'Password changed successfully'}, status=status.HTTP_200_OK)
+                else:
+                    return Response({'message': 'Password change failed'}, status=status.HTTP_400_BAD_REQUEST)
+
+            
+        else:
+            return Response({'message': 'Invalid method'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+

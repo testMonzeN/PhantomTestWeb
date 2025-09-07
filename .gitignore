@@ -1,0 +1,9 @@
+cabinet/__pycache__/
+home/__pycache__/
+logs/__pycache__/
+Phantom/__pycache__/
+
+.venv/
+__pycache__/
+.git/
+.idea/

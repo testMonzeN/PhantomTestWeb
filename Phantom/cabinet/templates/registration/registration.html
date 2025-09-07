@@ -1,0 +1,68 @@
+{% extends 'global/base.html' %}
+{% load static %}
+
+{% block name_page %}
+<script>
+    const currentNamePage = "Registration";
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="login-wrapper">
+    <div class="container">
+        <div class="login-content dark-content-box">
+            <div class="login-form-container">
+                <div class="login-header">
+                    <h1>Регистрация</h1>
+                    <p>Создайте новый аккаунт</p>
+                </div>
+                
+                <form method="post" class="login-form">
+                    {% csrf_token %}
+                    
+                    {% if form.errors %}
+                    <div class="error-message">
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    
+                    <div class="form-group">
+                        <label for="id_username">Имя пользователя</label>
+                        <input type="text" name="username" id="id_username" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="id_email">Email</label>
+                        <input type="email" name="email" id="id_email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="id_password1">Пароль</label>
+                        <input type="password" name="password1" id="id_password1" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="id_password2">Подтверждение пароля</label>
+                        <input type="password" name="password2" id="id_password2" required>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="login-btn">Зарегистрироваться</button>
+                    </div>
+                    
+                    <div class="form-links">
+                        <a href="{% url 'login' %}" class="form-link">Уже есть аккаунт?</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'global/base.html' %}
+
+{% block name_page %}
+<script>
+    const currentNamePage = "Home";
+</script>
+{% endblock %}
+
+{% block content %}
+<main class="main-content">
+    <div class="container">
+        <section class="dark-content-box hero">
+            <h1>Phantom</h1>
+            <p class="subtitle">Лучший программный продукт с уникальными возможностями</p>
+            <div class="cta-buttons">
+                <a href="{% url 'pricing' %}" class="download-btn">See Pricing</a>
+                <a href="{% url 'user-agreement' %}" class="discord-btn">Learn more</a>
+            </div>
+        </section>
+    </div>
+</main>
+{% endblock %}
+
+

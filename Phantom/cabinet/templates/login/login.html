@@ -1,0 +1,52 @@
+{% extends 'global/base.html' %}
+{% load static %}
+
+{% block name_page %}
+<script>
+    const currentNamePage = "Login";
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="login-wrapper">
+    <div class="container">
+        <div class="login-content dark-content-box">
+            <div class="login-form-container">
+                <div class="login-header">
+                    <h1>Вход в аккаунт</h1>
+                    <p>Введите данные для входа в личный кабинет</p>
+                </div>
+                
+                <form method="post" class="login-form">
+                    {% csrf_token %}
+                    
+                    {% if form.errors %}
+                    <div class="error-message">
+                        <p>Имя пользователя или пароль неверны. Пожалуйста, попробуйте снова.</p>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="form-group">
+                        <label for="id_username">Имя пользователя</label>
+                        <input type="text" name="username" id="id_username" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="id_password">Пароль</label>
+                        <input type="password" name="password" id="id_password" required>
+                    </div>
+                   
+                    <div class="form-actions">
+                        <button type="submit" class="login-btn">Войти</button>
+                    </div>
+                    
+                    <div class="form-links">
+                        <!--<a href="{% url 'change' %}" class="form-link">Забыли пароль?</a> -->
+                        <a href="{% url 'register' %}" class="form-link">Регистрация</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
